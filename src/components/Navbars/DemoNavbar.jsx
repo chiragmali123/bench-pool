@@ -84,7 +84,7 @@ class DemoNavbar extends React.Component {
                   <UncontrolledDropdown nav>
                     <DropdownToggle nav to="/" tag={Link}>
                       <i className="ni ni-ui-04 d-lg-none mr-1" />
-                      <span className="nav-link-inner--text">Components</span>
+                      <span className="nav-link-inner--text">Opportunities</span>
                     </DropdownToggle>
                     {/* <DropdownMenu className="dropdown-menu-xl">
                       <div className="dropdown-menu-inner">
@@ -148,7 +148,27 @@ class DemoNavbar extends React.Component {
                   <UncontrolledDropdown nav>
                     <DropdownToggle nav to="/" tag={Link}>
                       <i className="ni ni-collection d-lg-none mr-1" />
-                      <span className="nav-link-inner--text">Examples</span>
+                      <span className="nav-link-inner--text">Challenges</span>
+                    </DropdownToggle>
+                    {/* <DropdownMenu>
+                      <DropdownItem to="/landing-page" tag={Link}>
+                        Landing
+                      </DropdownItem>
+                      <DropdownItem to="/profile-page" tag={Link}>
+                        Profile
+                      </DropdownItem>
+                      <DropdownItem to="/login-page" tag={Link}>
+                        Login
+                      </DropdownItem>
+                      <DropdownItem to="/register-page" tag={Link}>
+                        Register
+                      </DropdownItem>
+                    </DropdownMenu> */}
+                  </UncontrolledDropdown>
+                  <UncontrolledDropdown nav>
+                    <DropdownToggle nav to="/" tag={Link}>
+                      <i className="ni ni-collection d-lg-none mr-1" />
+                      <span className="nav-link-inner--text">Pool</span>
                     </DropdownToggle>
                     {/* <DropdownMenu>
                       <DropdownItem to="/landing-page" tag={Link}>
