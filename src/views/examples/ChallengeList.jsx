@@ -24,13 +24,20 @@ import { Button, Card, Container, Row, Col } from "reactstrap";
 import DemoNavbar from "components/Navbars/DemoNavbar.jsx";
 //import SimpleFooter from "components/Footers/SimpleFooter.jsx";
 import SimpleFooter from "components/Footers/CardsFooter.jsx";
-
+import {connect} from 'react-redux';
+import { getChallenges } from "Actions/Actions";
+import { checkValueNotEmpty } from "utils";
 class ChallengeList extends React.Component {
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     this.refs.main.scrollTop = 0;
   }
+
+  componentWillMount() {
+    this.props.fetchChallenges({});
+  }
+
   render() {
     return (
       <>
@@ -156,14 +163,29 @@ class ChallengeList extends React.Component {
                       </Col>
                     </Row>
                   </div>
-                  <Row>
-                    <Col className="col-sm-5">
-                      <span>One of three columns</span>
-                    </Col>
-                    <Col className="col-sm-7">
-                      <span>One of three columns</span>
-                    </Col>
-                  </Row>
+                  <Container>
+                    <Row className="row summary-header-row">
+                      <Col className="col-sm-5">
+                        <span>Name Name</span>
+                      </Col>
+                      <Col className="col-sm-7">
+                        <span>Summary</span>
+                      </Col>
+                    </Row>
+                    {this.props.challengesData && this.props.challengesData.map(opportunity => {
+                      if(!checkValueNotEmpty(opportunity.name)){
+                        return null;
+                      }
+                      return <Row className="row summary-row">
+                        <Col className="col-sm-5">
+                          <span>{opportunity.name}</span>
+                        </Col>
+                        <Col className="col-sm-7">
+                          <span>{opportunity.summary}</span>
+                        </Col>
+                      </Row>;
+                    })}
+                  </Container>
                   <div className="mt-5 py-5 border-top text-center">
                     <Row className="justify-content-center">
                       <Col lg="9">
@@ -184,5 +206,19 @@ class ChallengeList extends React.Component {
     );
   }
 }
+function mapStateToProps(state) {
+  return {
+    challengesData: state.appData.challengesData
+  }
+}
 
-export default ChallengeList;
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchChallenges: (request) => dispatch(getChallenges(request))
+  }
+}
+
+export default connect(
+mapStateToProps,
+mapDispatchToProps,
+)(ChallengeList)

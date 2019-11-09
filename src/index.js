@@ -34,6 +34,7 @@ import ChallengeList from "views/examples/ChallengeList";
 import PoolList from "views/examples/PoolList";
 import configureStore from "AppStore";
 import {Provider} from 'react-redux';
+import './index.css'
 
 const store = configureStore()
 ReactDOM.render(
