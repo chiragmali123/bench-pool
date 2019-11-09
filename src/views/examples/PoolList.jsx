@@ -27,6 +27,7 @@ import SimpleFooter from "components/Footers/CardsFooter.jsx";
 import { checkValueNotEmpty } from "utils";
 import {connect} from 'react-redux';
 import { getPool } from "Actions/Actions";
+import { isArrayEmpty } from "utils";
 class PoolList extends React.Component {
   componentDidMount() {
     document.documentElement.scrollTop = 0;
@@ -189,7 +190,7 @@ class PoolList extends React.Component {
                         <span>Employee Email Id</span>
                       </Col>
                     </Row>
-                    {this.props.poolData && this.props.poolData.map(opportunity => {
+                    {(!isArrayEmpty(this.props.poolData)) && this.props.poolData.map(opportunity => {
                       
                       return <Row className="row summary-row">
                         <Col className="col-sm-5">

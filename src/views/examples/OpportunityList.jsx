@@ -27,6 +27,8 @@ import SimpleFooter from "components/Footers/CardsFooter.jsx";
 import {connect} from 'react-redux';
 import { getOpportunities } from "Actions/Actions";
 import { checkValueNotEmpty } from "utils";
+import { isArrayEmpty } from "utils";
+import { putOpportunityAction } from "Actions/OpportunityAction";
 class OpportunityList extends React.Component {
   componentDidMount() {
     document.documentElement.scrollTop = 0;
@@ -36,6 +38,10 @@ class OpportunityList extends React.Component {
 
   componentWillMount() {
     this.props.fetchOpportunities({});
+  }
+
+  updateAction = (userEmail, action) => {
+    this.props.updateOpportunityAction({ action, userEmail })
   }
 
   render() {
@@ -172,7 +178,7 @@ class OpportunityList extends React.Component {
                         <span>Project Summary</span>
                       </Col>
                     </Row>
-                    {this.props.opportunitiesData && this.props.opportunitiesData.map(opportunity => {
+                    {(!isArrayEmpty(this.props.opportunitiesData)) && this.props.opportunitiesData.map(opportunity => {
                       if (!checkValueNotEmpty(opportunity.projectName)) {
                         return null;
                       }
@@ -215,7 +221,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-      fetchOpportunities: (request) => dispatch(getOpportunities(request))
+      fetchOpportunities: (request) => dispatch(getOpportunities(request)),
+      updateOpportunityAction: (request) => dispatch(putOpportunityAction(request))
     }
 }
 
