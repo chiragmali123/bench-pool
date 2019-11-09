@@ -24,13 +24,20 @@ import { Button, Card, Container, Row, Col } from "reactstrap";
 import DemoNavbar from "components/Navbars/DemoNavbar.jsx";
 //import SimpleFooter from "components/Footers/SimpleFooter.jsx";
 import SimpleFooter from "components/Footers/CardsFooter.jsx";
-
+import {connect} from 'react-redux';
+import { getOpportunities } from "Actions/Actions";
+import { checkValueNotEmpty } from "utils";
 class OpportunityList extends React.Component {
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     this.refs.main.scrollTop = 0;
   }
+
+  componentWillMount() {
+    this.props.fetchOpportunities({});
+  }
+
   render() {
     return (
       <>
@@ -156,14 +163,29 @@ class OpportunityList extends React.Component {
                       </Col>
                     </Row>
                   </div>
-                  <Row>
-                    <Col className="col-sm-5">
-                      <span>One of three columns</span>
-                    </Col>
-                    <Col className="col-sm-7">
-                      <span>One of three columns</span>
-                    </Col>
-                  </Row>
+                  <Container>
+                    <Row className="row summary-header-row">
+                      <Col className="col-sm-5">
+                        <span>Project Name</span>
+                      </Col>
+                      <Col className="col-sm-7">
+                        <span>Project Summary</span>
+                      </Col>
+                    </Row>
+                    {this.props.opportunitiesData && this.props.opportunitiesData.map(opportunity => {
+                      if (!checkValueNotEmpty(opportunity.projectName)) {
+                        return null;
+                      }
+                      return <Row className="row summary-row">
+                        <Col className="col-sm-5">
+                          <span>{opportunity.projectName}</span>
+                        </Col>
+                        <Col className="col-sm-7">
+                          <span>{opportunity.summary}</span>
+                        </Col>
+                      </Row>;
+                    })}
+                  </Container>
                   <div className="mt-5 py-5 border-top text-center">
                     <Row className="justify-content-center">
                       <Col lg="9">
@@ -185,4 +207,19 @@ class OpportunityList extends React.Component {
   }
 }
 
-export default OpportunityList;
+function mapStateToProps(state) {
+    return {
+      opportunitiesData: state.appData.opportunitiesData
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+      fetchOpportunities: (request) => dispatch(getOpportunities(request))
+    }
+}
+
+export default connect(
+mapStateToProps,
+mapDispatchToProps,
+)(OpportunityList)
