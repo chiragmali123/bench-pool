@@ -24,13 +24,22 @@ import { Button, Card, Container, Row, Col } from "reactstrap";
 import DemoNavbar from "components/Navbars/DemoNavbar.jsx";
 //import SimpleFooter from "components/Footers/SimpleFooter.jsx";
 import SimpleFooter from "components/Footers/CardsFooter.jsx";
-
+import { checkValueNotEmpty } from "utils";
+import {connect} from 'react-redux';
+import { getPool } from "Actions/Actions";
+import { isArrayEmpty } from "utils";
 class PoolList extends React.Component {
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     this.refs.main.scrollTop = 0;
   }
+
+  componentWillMount() {
+    this.props.fetchPool({});
+  }
+
+
   render() {
     return (
       <>
@@ -156,14 +165,43 @@ class PoolList extends React.Component {
                       </Col>
                     </Row>
                   </div>
-                  <Row>
-                    <Col className="col-sm-5">
-                      <span>One of three columns</span>
-                    </Col>
-                    <Col className="col-sm-7">
-                      <span>One of three columns</span>
-                    </Col>
-                  </Row>
+                  <div className="mt-5 py-5 border-top text-center">
+                    <Row className="justify-content-center">
+                      <Col lg="9">
+                        {/* <p>
+                          An artist of considerable range, Ryan — the name taken
+                          by Melbourne-raised, Brooklyn-based Nick Murphy —
+                          writes, performs and records all of his own music,
+                          giving it a warm, intimate feel with a solid groove
+                          structure. An artist of considerable range.
+                        </p>
+                        <a href="#pablo" onClick={e => e.preventDefault()}>
+                          Show more
+                        </a> */}
+                      </Col>
+                    </Row>
+                  </div>
+                  <Container>
+                    <Row className="row summary-header-row">
+                      <Col className="col-sm-5">
+                        <span>Employee Name</span>
+                      </Col>
+                      <Col className="col-sm-7">
+                        <span>Employee Email Id</span>
+                      </Col>
+                    </Row>
+                    {(!isArrayEmpty(this.props.poolData)) && this.props.poolData.map(opportunity => {
+                      
+                      return <Row className="row summary-row">
+                        <Col className="col-sm-5">
+                          <span>{`${opportunity.firstName} ${opportunity.lastName}`}</span>
+                        </Col>
+                        <Col className="col-sm-7">
+                        <span>{`${opportunity.email}`}</span>
+                        </Col>
+                      </Row>;
+                    })}
+                  </Container>
                   <div className="mt-5 py-5 border-top text-center">
                     <Row className="justify-content-center">
                       <Col lg="9">
@@ -184,5 +222,19 @@ class PoolList extends React.Component {
     );
   }
 }
+function mapStateToProps(state) {
+  return {
+    poolData: state.appData.poolData
+  }
+}
 
-export default PoolList;
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchPool: (request) => dispatch(getPool(request))
+  }
+}
+
+export default connect(
+mapStateToProps,
+mapDispatchToProps,
+)(PoolList)

@@ -27,6 +27,8 @@ import SimpleFooter from "components/Footers/CardsFooter.jsx";
 import {connect} from 'react-redux';
 import { getChallenges } from "Actions/Actions";
 import { checkValueNotEmpty } from "utils";
+import { isArrayEmpty } from "utils";
+import { putChallengeAction } from "Actions/ChallengeAction";
 class ChallengeList extends React.Component {
   componentDidMount() {
     document.documentElement.scrollTop = 0;
@@ -36,6 +38,10 @@ class ChallengeList extends React.Component {
 
   componentWillMount() {
     this.props.fetchChallenges({});
+  }
+
+  updateAction = (userEmail, action) => {
+    this.props.updateChallengeAction({ action, userEmail })
   }
 
   render() {
@@ -172,7 +178,7 @@ class ChallengeList extends React.Component {
                         <span>Summary</span>
                       </Col>
                     </Row>
-                    {this.props.challengesData && this.props.challengesData.map(opportunity => {
+                    { (!isArrayEmpty(this.props.challengesData)) && this.props.challengesData.map(opportunity => {
                       if(!checkValueNotEmpty(opportunity.name)){
                         return null;
                       }
@@ -214,7 +220,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchChallenges: (request) => dispatch(getChallenges(request))
+    fetchChallenges: (request) => dispatch(getChallenges(request)),
+    updateChallengeAction: (request) => dispatch(putChallengeAction(request))
   }
 }
 
