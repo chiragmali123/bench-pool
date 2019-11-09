@@ -17,7 +17,7 @@
 */
 import React from "react";
 // nodejs library that concatenates classes
-import classnames from "classnames";
+import { connect } from 'react-redux';
 // reactstrap components
 import {
   Button,
@@ -28,9 +28,8 @@ import {
   InputGroupText,
   InputGroup,
   Modal,
-  Row,
-  Col
 } from "reactstrap";
+import { saveOpportunities } from "Actions/Actions";
 
 class OpportunityModal extends React.Component {
   toggleModal = state => {
@@ -55,7 +54,8 @@ class OpportunityModal extends React.Component {
 
   onSave = () => {
     // call API
-
+    const body = {...this.state, "userEmail": "chirag.mali@synerzip.com"};
+    this.props.saveOpportunities(body);
   }
   render() {
     return (
@@ -88,7 +88,7 @@ class OpportunityModal extends React.Component {
               </button>
             </div>
             <div className="modal-body">
-              <Form role="form" autoComplete={false}>
+              <Form role="form" autoComplete={"false"}>
                 <FormGroup>
                   <InputGroup className="input-group-alternative mb-3">
                     <InputGroupAddon addonType="prepend">
@@ -142,7 +142,7 @@ class OpportunityModal extends React.Component {
               </Form>
             </div>
             <div className="modal-footer">
-              <Button color="primary" type="button">
+              <Button color="primary" type="button" onClick={this.onSave}>
                 Create
                 </Button>
               <Button
@@ -162,4 +162,11 @@ class OpportunityModal extends React.Component {
   }
 }
 
-export default OpportunityModal;
+const mapStateToProps = state => ({
+})
+
+const mapDispatchToProps = dispatch => ({
+  saveOpportunities: body => dispatch(saveOpportunities(body))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(OpportunityModal);

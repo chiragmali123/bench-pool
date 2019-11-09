@@ -43,7 +43,7 @@ import CardsFooter from "components/Footers/CardsFooter.jsx";
 
 // index page sections
 import Download from "../IndexSections/Download.jsx";
-import OpportunityModal from "./OpportunityModal.jsx";
+import OpportunityModal from "./OpportunityModal.js";
 import ChallengeModal from "./ChallengeModal.jsx";
 
 class Landing extends React.Component {

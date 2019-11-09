@@ -1,6 +1,6 @@
 import HttpStatus from 'http-status-codes';
 
-import { FETCHING_DATA_FAILURE } from './Constants/AppConstants';
+import { FETCHING_DATA_FAILURE } from './constant/Constants.js';
 
 
 /**

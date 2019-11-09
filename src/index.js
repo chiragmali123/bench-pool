@@ -38,6 +38,7 @@ import {Provider} from 'react-redux';
 const store = configureStore()
 ReactDOM.render(
   <BrowserRouter>
+  <Provider store={store}>
     <Switch>
       <Route path="/" exact render={props => <Landing {...props} />} />
       <Route
@@ -73,6 +74,7 @@ ReactDOM.render(
       />
       <Redirect to="/" />
     </Switch>
+    </Provider>
   </BrowserRouter>,
   document.getElementById("root")
 );
