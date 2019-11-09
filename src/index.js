@@ -32,7 +32,10 @@ import ChallengeModal from "views/examples/ChallengeModal";
 import OpportunityList from "views/examples/OpportunityList";
 import ChallengeList from "views/examples/ChallengeList";
 import PoolList from "views/examples/PoolList";
+import configureStore from "AppStore";
+import {Provider} from 'react-redux';
 
+const store = configureStore()
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
