@@ -44,7 +44,7 @@ import CardsFooter from "components/Footers/CardsFooter.jsx";
 // index page sections
 import Download from "../IndexSections/Download.jsx";
 import OpportunityModal from "./OpportunityModal.js";
-import ChallengeModal from "./ChallengeModal.jsx";
+import ChallengeModal from "./ChallengeModal.js";
 
 class Landing extends React.Component {
   state = {};

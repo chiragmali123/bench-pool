@@ -16,8 +16,7 @@
 
 */
 import React from "react";
-// nodejs library that concatenates classes
-import classnames from "classnames";
+import { connect } from 'react-redux';
 // reactstrap components
 import {
   Button,
@@ -29,6 +28,7 @@ import {
   InputGroup,
   Modal,
 } from "reactstrap";
+import { saveChallenges } from "Actions/Actions";
 
 class ChallengeModal extends React.Component {
   toggleModal = state => {
@@ -52,7 +52,9 @@ class ChallengeModal extends React.Component {
 
   onSave = () => {
     // call API
-    
+    const body = {...this.state, "userEmail": "chirag.mali@synerzip.com"};
+    this.props.saveChallenges(body);
+    this.toggleModal("defaultModal");
   }
 
   render() {
@@ -120,7 +122,7 @@ class ChallengeModal extends React.Component {
                 </Form>
               </div>
               <div className="modal-footer">
-                <Button color="success" type="button">
+                <Button color="success" type="button" onClick={this.onSave}>
                   Create
                 </Button>
                 <Button
@@ -140,4 +142,11 @@ class ChallengeModal extends React.Component {
   }
 }
 
-export default ChallengeModal;
+const mapStateToProps = state => ({
+})
+
+const mapDispatchToProps = dispatch => ({
+  saveChallenges: body => dispatch(saveChallenges(body))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChallengeModal);

@@ -5,6 +5,7 @@ import { FETCHING_OPPORTUNITIES_SUCCESS } from 'constant/Constants';
 import { saveOpportunity } from 'api/saveOpportunity';
 import { FETCHING_CHALLENGES_SUCCESS } from 'constant/Constants';
 import { fetchChallenges } from 'api/AppApi';
+import { saveChallenge } from 'api/saveChallenge';
 
 // action for fetching access token
 export function getOpportunities({ bodyJson }) {
@@ -67,4 +68,23 @@ export function getChallengesSuccess(data) {
         type: FETCHING_CHALLENGES_SUCCESS,
         data
     }
+}
+
+
+// action for fetching access token
+export function saveChallenges(bodyJson) {
+    return (dispatch) => {
+        saveChallengesData(dispatch, bodyJson);
+    }
+}
+
+function saveChallengesData(dispatch, bodyJson) {
+    saveChallenge(bodyJson)
+        .then((response) => {
+            if (response.status === HttpStatus.OK)
+                dispatch(getChallengesSuccess(response.payload))
+            else {
+                dispatch(showGlobalFailure(response.status));
+            }
+        })
 }

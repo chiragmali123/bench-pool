@@ -56,6 +56,7 @@ class OpportunityModal extends React.Component {
     // call API
     const body = {...this.state, "userEmail": "chirag.mali@synerzip.com"};
     this.props.saveOpportunities(body);
+    this.toggleModal("defaultModal");
   }
   render() {
     return (
