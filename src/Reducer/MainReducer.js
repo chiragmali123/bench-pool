@@ -1,6 +1,6 @@
-import { FETCHING_OPPORTUNITIES } from "constant/Constants"
 import { FETCHING_OPPORTUNITIES_SUCCESS } from "constant/Constants"
 import { FETCHING_CHALLENGES_SUCCESS } from "constant/Constants"
+import { FETCHING_POOL_SUCCESS } from "constant/Constants"
 
 const initialState = {
     challengesData: [],
@@ -20,6 +20,11 @@ export default function MainReducer(state = initialState, action) {
             return {
                 ...state,
                 challengesData: action.data ? action.data : []
+            }
+        case FETCHING_POOL_SUCCESS:
+            return {
+                ...state,
+                poolData: action.data ? action.data : []
             }
         default:
             return state

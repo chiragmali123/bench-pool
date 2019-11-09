@@ -6,3 +6,4 @@ export const opportunityPath = '/benchpool/opportunity';
 export const challengesPath = '/benchpool/challenges';
 export const FETCHING_CHALLENGES_SUCCESS = "FETCHING_CHALLENGES_SUCCESS";
 export const SAVE_CHALLENGES = "SAVE_CHALLENGES";
+export const FETCHING_POOL_SUCCESS = "FETCHING_POOL_SUCCESS";

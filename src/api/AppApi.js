@@ -28,3 +28,16 @@ export const fetchChallenges = ({ bodyJson }) =>
         console.log("Error while fetching opportunities:", error);
         return handleError(error);
     });
+
+export const fetchPool = ({ bodyJson }) =>
+    axios.get(
+        "/benchpool/user",
+        {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8'
+            }
+        }
+    ).then(data => handleOkResponse(data)).catch(error => {
+        console.log("Error while fetching opportunities:", error);
+        return handleError(error);
+    });

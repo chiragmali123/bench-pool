@@ -6,11 +6,13 @@ import { saveOpportunity } from 'api/saveOpportunity';
 import { FETCHING_CHALLENGES_SUCCESS } from 'constant/Constants';
 import { fetchChallenges } from 'api/AppApi';
 import { saveChallenge } from 'api/saveChallenge';
+import { fetchPool } from 'api/AppApi';
+import { FETCHING_POOL_SUCCESS } from 'constant/Constants';
 
 // action for fetching access token
-export function getOpportunities({ bodyJson }) {
+export function getOpportunities(bodyJson) {
     return (dispatch) => {
-        getOpportunitiesData(dispatch, { bodyJson });
+        getOpportunitiesData(dispatch, bodyJson);
     }
 }
 
@@ -48,7 +50,7 @@ function saveOpportunitiesData(dispatch, bodyJson) {
 // action for fetching access token
 export function getChallenges({ bodyJson }) {
     return (dispatch) => {
-        getChallengesData(dispatch, { bodyJson });
+        getChallengesData(dispatch, bodyJson);
     }
 }
 
@@ -83,8 +85,29 @@ function saveChallengesData(dispatch, bodyJson) {
         .then((response) => {
             if (response.status === HttpStatus.OK)
                 dispatch(getChallengesSuccess(response.payload))
+        })
+}
+// action for fetching access token
+export function getPool(bodyJson) {
+    return (dispatch) => {
+        getPoolData(dispatch, bodyJson);
+    }
+}
+
+function getPoolData(dispatch, bodyJson) {
+    fetchPool({ bodyJson })
+        .then((response) => {
+            if (response.status === HttpStatus.OK)
+                dispatch(getPoolSuccess(response.payload))
             else {
                 dispatch(showGlobalFailure(response.status));
             }
         })
+}
+
+export function getPoolSuccess(data) {
+    return {
+        type: FETCHING_POOL_SUCCESS,
+        data
+    }
 }
