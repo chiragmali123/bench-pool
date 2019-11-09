@@ -72,25 +72,25 @@ class Landing extends React.Component {
                 <span />
                 <span />
               </div>
-              <Container className="py-lg-md d-flex">
+              {/* <Container className="py-lg-md d-flex">
                 <div className="col px-0">
                   <Row>
                     <Col lg="6">
-                      {/* <h1 className="display-3 text-white">
+                      <h1 className="display-3 text-white">
                         A beautiful Design System{" "}
                         <span>completed with examples</span>
-                      </h1> */}
-                      {/* <p className="lead text-white">
+                      </h1>
+                      <p className="lead text-white">
                         The design system comes with four pre-built pages to
                         help you get started faster. You can change the text and
                         images and you're good to go.
                       </p>
                       <div className="btn-wrapper">
-                      </div> */}
+                      </div>
                     </Col>
                   </Row>
                 </div>
-              </Container>
+              </Container> */}
               {/* SVG separator */}
               <div className="separator separator-bottom separator-skew">
                 <svg
@@ -144,8 +144,7 @@ class Landing extends React.Component {
                           <Button
                             className="mt-4"
                             color="primary"
-                            href="#pablo"
-                            onClick={e => e.preventDefault()}
+                            href="/opportunity-list-page"
                           >
                             View
                           </Button>
@@ -172,8 +171,7 @@ class Landing extends React.Component {
                           {/* <Button
                             className="mt-4"
                             color="success"
-                            href="#pablo"
-                            onClick={e => e.preventDefault()}
+                            href="/challenge-list-page"
                           >
                             Create
                           </Button> */}
@@ -208,8 +206,7 @@ class Landing extends React.Component {
                           <Button
                             className="mt-4"
                             color="warning"
-                            href="#pablo"
-                            onClick={e => e.preventDefault()}
+                            href="/pool-list-page"
                           >
                             View
                           </Button>

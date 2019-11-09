@@ -28,13 +28,18 @@ import Landing from "views/examples/Landing.jsx";
 import Login from "views/examples/Login.jsx";
 import Profile from "views/examples/Profile.jsx";
 import Register from "views/examples/Register.jsx";
-import OpportunityModal from "views/examples/OpportunityModal";
 import ChallengeModal from "views/examples/ChallengeModal";
+import OpportunityList from "views/examples/OpportunityList";
+import ChallengeList from "views/examples/ChallengeList";
+import PoolList from "views/examples/PoolList";
+import configureStore from "AppStore";
+import {Provider} from 'react-redux';
 
+const store = configureStore()
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route path="/" exact render={props => <Index {...props} />} />
+      <Route path="/" exact render={props => <Landing {...props} />} />
       <Route
         path="/landing-page"
         exact
@@ -45,6 +50,21 @@ ReactDOM.render(
         path="/profile-page"
         exact
         render={props => <Profile {...props} />}
+      />
+      <Route
+        path="/opportunity-list-page"
+        exact
+        render={props => <OpportunityList {...props} />}
+      />
+      <Route
+        path="/challenge-list-page"
+        exact
+        render={props => <ChallengeList {...props} />}
+      />
+      <Route
+        path="/pool-list-page"
+        exact
+        render={props => <PoolList {...props} />}
       />
       <Route
         path="/register-page"
