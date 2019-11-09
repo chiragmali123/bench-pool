@@ -33,12 +33,30 @@ import {
 } from "reactstrap";
 
 class OpportunityModal extends React.Component {
-  state = {};
   toggleModal = state => {
     this.setState({
       [state]: !this.state[state]
     });
   };
+  state = {
+    projectName: '',
+    summary: '',
+    description: '',
+    salePerson: '',
+    teamLead: ''
+  }
+
+  onChangeValue = (e) => {
+    this.setState({
+      ...this.state,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  onSave = () => {
+    // call API
+
+  }
   render() {
     return (
       <>
@@ -70,7 +88,7 @@ class OpportunityModal extends React.Component {
               </button>
             </div>
             <div className="modal-body">
-              <Form role="form">
+              <Form role="form" autoComplete={false}>
                 <FormGroup>
                   <InputGroup className="input-group-alternative mb-3">
                     <InputGroupAddon addonType="prepend">
@@ -78,7 +96,7 @@ class OpportunityModal extends React.Component {
                         <i className="ni ni-laptop" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Project Name" type="text" />
+                    <Input placeholder="Project Name" type="text" onChange={this.onChangeValue} name="projectName" value={this.state.projectName} />
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
@@ -88,7 +106,7 @@ class OpportunityModal extends React.Component {
                         <i className="ni ni-align-left-2" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Summary" type="text" />
+                    <Input placeholder="Summary" type="text" onChange={this.onChangeValue} name="summary" value={this.state.summary}/>
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
@@ -98,7 +116,7 @@ class OpportunityModal extends React.Component {
                         <i className="ni ni-bullet-list-67" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Description" type="text" />
+                    <Input placeholder="Description" type="text" onChange={this.onChangeValue} name="description" value={this.state.description}/>
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
@@ -108,7 +126,7 @@ class OpportunityModal extends React.Component {
                         <i className="fa fa-user" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Sales Person" type="text" />
+                    <Input placeholder="Sales Person" type="text" onChange={this.onChangeValue} name="salePerson" value={this.state.salePerson} />
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
@@ -118,7 +136,7 @@ class OpportunityModal extends React.Component {
                         <i className="fa fa-male" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Team Lead" type="text" />
+                    <Input placeholder="Team Lead" type="text" onChange={this.onChangeValue} name="teamLead" value={this.state.teamLead} />
                   </InputGroup>
                 </FormGroup>
               </Form>

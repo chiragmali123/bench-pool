@@ -31,12 +31,30 @@ import {
 } from "reactstrap";
 
 class ChallengeModal extends React.Component {
-  state = {};
   toggleModal = state => {
     this.setState({
       [state]: !this.state[state]
     });
   };
+
+  state = {
+    challengeName: '',
+    summary: '',
+    description: '',
+  }
+
+  onChangeValue = (e) => {
+    this.setState({
+      ...this.state,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  onSave = () => {
+    // call API
+    
+  }
+
   render() {
     return (
       <>
@@ -76,7 +94,7 @@ class ChallengeModal extends React.Component {
                           <i className="ni ni-laptop" />
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input placeholder="Challenge Name" type="text" />
+                      <Input placeholder="Challenge Name" type="text" onChange={this.onChangeValue} name="challengeName" value={this.state.challengeName}/>
                     </InputGroup>
                   </FormGroup>
                   <FormGroup>
@@ -86,7 +104,7 @@ class ChallengeModal extends React.Component {
                           <i className="ni ni-align-left-2" />
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input placeholder="Summary" type="text" />
+                      <Input placeholder="Summary" type="text" onChange={this.onChangeValue} name="summary" value={this.state.summary}/>
                     </InputGroup>
                   </FormGroup>
                   <FormGroup>
@@ -96,7 +114,7 @@ class ChallengeModal extends React.Component {
                           <i className="ni ni-bullet-list-67" />
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input placeholder="Description" type="text" />
+                      <Input placeholder="Description" type="text" onChange={this.onChangeValue} name="description" value={this.state.description}/>
                     </InputGroup>
                   </FormGroup>
                 </Form>
