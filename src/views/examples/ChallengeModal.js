@@ -17,6 +17,7 @@
 */
 import React from "react";
 import { connect } from 'react-redux';
+import '../../css/ChallengeModal.css';
 // reactstrap components
 import {
   Button,
@@ -43,6 +44,18 @@ class ChallengeModal extends React.Component {
     description: '',
   }
 
+  componentDidUpdate(prevProp, prevState) {
+    if(this.state.defaultModal !== prevState.defaultModal) {
+      this.setState({
+        projectName: '',
+        summary: '',
+        description: '',
+        salePerson: '',
+        teamLead: ''
+      });
+    }
+  }
+  
   onChangeValue = (e) => {
     this.setState({
       ...this.state,
@@ -88,7 +101,7 @@ class ChallengeModal extends React.Component {
                 </button>
               </div>
               <div className="modal-body">
-                <Form role="form">
+                <Form role="form" className='form-border' autoComplete='false'>
                   <FormGroup>
                     <InputGroup className="input-group-alternative mb-3">
                       <InputGroupAddon addonType="prepend">

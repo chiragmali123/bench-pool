@@ -18,6 +18,7 @@
 import React from "react";
 // nodejs library that concatenates classes
 import { connect } from 'react-redux';
+import '../../css/ChallengeModal.css';
 // reactstrap components
 import {
   Button,
@@ -43,6 +44,18 @@ class OpportunityModal extends React.Component {
     description: '',
     salePerson: '',
     teamLead: ''
+  }
+
+  componentDidUpdate(prevProp, prevState) {
+    if(this.state.defaultModal !== prevState.defaultModal) {
+      this.setState({
+        projectName: '',
+        summary: '',
+        description: '',
+        salePerson: '',
+        teamLead: ''
+      });
+    }
   }
 
   onChangeValue = (e) => {
@@ -89,7 +102,7 @@ class OpportunityModal extends React.Component {
               </button>
             </div>
             <div className="modal-body">
-              <Form role="form" autoComplete={"false"}>
+              <Form role="form" autoComplete={"false"} className='form-border'>
                 <FormGroup>
                   <InputGroup className="input-group-alternative mb-3">
                     <InputGroupAddon addonType="prepend">

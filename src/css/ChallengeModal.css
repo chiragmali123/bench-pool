@@ -1,0 +1,21 @@
+.form-border {
+    padding: 15px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+
+.form-control {
+    color: black;
+}
+
+.form-control:focus {
+    color: black;
+}
+
+.input-group-text {
+    color: black;
+}
+
+.input-group-alternative {
+    box-shadow: 0 1px 3px rgba(50, 50, 93, 1), 0 1px 0 rgba(0, 0, 0, 0.02);
+}
