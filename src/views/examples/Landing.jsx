@@ -19,6 +19,7 @@ import React from "react";
 // nodejs library that concatenates classes
 import classnames from "classnames";
 
+
 // reactstrap components
 import {
   Badge,
@@ -42,6 +43,8 @@ import CardsFooter from "components/Footers/CardsFooter.jsx";
 
 // index page sections
 import Download from "../IndexSections/Download.jsx";
+import OpportunityModal from "./OpportunityModal.jsx";
+import ChallengeModal from "./ChallengeModal.jsx";
 
 class Landing extends React.Component {
   state = {};
@@ -129,14 +132,15 @@ class Landing extends React.Component {
                           <div>
 
                           </div>
-                          <Button
+                          {/* <Button
                             className="mt-4"
                             color="primary"
                             href="#pablo"
                             onClick={e => e.preventDefault()}
                           >
                             Create
-                          </Button>
+                          </Button> */}
+                          <OpportunityModal></OpportunityModal>
                           <Button
                             className="mt-4"
                             color="primary"
@@ -165,14 +169,15 @@ class Landing extends React.Component {
                           <div>
 
                           </div>
-                          <Button
+                          {/* <Button
                             className="mt-4"
                             color="success"
                             href="#pablo"
                             onClick={e => e.preventDefault()}
                           >
                             Create
-                          </Button>
+                          </Button> */}
+                          <ChallengeModal />
                           <Button
                             className="mt-4"
                             color="success"

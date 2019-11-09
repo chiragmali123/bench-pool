@@ -62,122 +62,72 @@ class Register extends React.Component {
             </div>
             <Container className="pt-lg-md">
               <Row className="justify-content-center">
-                <Col lg="5">
+                <Col lg="12">
                   <Card className="bg-secondary shadow border-0">
                     <CardHeader className="bg-white pb-5">
                       <div className="text-muted text-center mb-3">
-                        <small>Sign up with</small>
-                      </div>
-                      <div className="text-center">
-                        <Button
-                          className="btn-neutral btn-icon mr-4"
-                          color="default"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <span className="btn-inner--icon mr-1">
-                            <img
-                              alt="..."
-                              src={require("assets/img/icons/common/github.svg")}
-                            />
-                          </span>
-                          <span className="btn-inner--text">Github</span>
-                        </Button>
-                        <Button
-                          className="btn-neutral btn-icon ml-1"
-                          color="default"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <span className="btn-inner--icon mr-1">
-                            <img
-                              alt="..."
-                              src={require("assets/img/icons/common/google.svg")}
-                            />
-                          </span>
-                          <span className="btn-inner--text">Google</span>
-                        </Button>
+                        <small>Create an opportunity.</small>
                       </div>
                     </CardHeader>
                     <CardBody className="px-lg-5 py-lg-5">
-                      <div className="text-center text-muted mb-4">
-                        <small>Or sign up with credentials</small>
-                      </div>
                       <Form role="form">
                         <FormGroup>
                           <InputGroup className="input-group-alternative mb-3">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                                <i className="ni ni-hat-3" />
+                                <i className="ni ni-laptop" />
                               </InputGroupText>
                             </InputGroupAddon>
-                            <Input placeholder="Name" type="text" />
+                            <Input placeholder="Project Name" type="text" />
                           </InputGroup>
                         </FormGroup>
                         <FormGroup>
                           <InputGroup className="input-group-alternative mb-3">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                                <i className="ni ni-email-83" />
+                                <i className="ni ni-align-left-2" />
                               </InputGroupText>
                             </InputGroupAddon>
-                            <Input placeholder="Email" type="email" />
+                            <Input placeholder="Summary" type="text" />
                           </InputGroup>
                         </FormGroup>
                         <FormGroup>
-                          <InputGroup className="input-group-alternative">
+                          <InputGroup className="input-group-alternative mb-3">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                                <i className="ni ni-lock-circle-open" />
+                                <i className="ni ni-bullet-list-67" />
                               </InputGroupText>
                             </InputGroupAddon>
-                            <Input
-                              placeholder="Password"
-                              type="password"
-                              autoComplete="off"
-                            />
+                            <Input placeholder="Description" type="text" />
                           </InputGroup>
                         </FormGroup>
-                        <div className="text-muted font-italic">
-                          <small>
-                            password strength:{" "}
-                            <span className="text-success font-weight-700">
-                              strong
-                            </span>
-                          </small>
-                        </div>
-                        <Row className="my-4">
-                          <Col xs="12">
-                            <div className="custom-control custom-control-alternative custom-checkbox">
-                              <input
-                                className="custom-control-input"
-                                id="customCheckRegister"
-                                type="checkbox"
-                              />
-                              <label
-                                className="custom-control-label"
-                                htmlFor="customCheckRegister"
-                              >
-                                <span>
-                                  I agree with the{" "}
-                                  <a
-                                    href="#pablo"
-                                    onClick={e => e.preventDefault()}
-                                  >
-                                    Privacy Policy
-                                  </a>
-                                </span>
-                              </label>
-                            </div>
-                          </Col>
-                        </Row>
+                        <FormGroup>
+                          <InputGroup className="input-group-alternative mb-3">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i className="fa fa-user" />
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input placeholder="Sales Person" type="text" />
+                          </InputGroup>
+                        </FormGroup>
+                        <FormGroup>
+                          <InputGroup className="input-group-alternative mb-3">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i className="fa fa-male" />
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input placeholder="Team Lead" type="text" />
+                          </InputGroup>
+                        </FormGroup>
                         <div className="text-center">
                           <Button
                             className="mt-4"
                             color="primary"
                             type="button"
                           >
-                            Create account
+                            Create Opportunity
                           </Button>
                         </div>
                       </Form>

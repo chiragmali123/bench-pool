@@ -28,6 +28,8 @@ import Landing from "views/examples/Landing.jsx";
 import Login from "views/examples/Login.jsx";
 import Profile from "views/examples/Profile.jsx";
 import Register from "views/examples/Register.jsx";
+import OpportunityModal from "views/examples/OpportunityModal";
+import ChallengeModal from "views/examples/ChallengeModal";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -47,7 +49,7 @@ ReactDOM.render(
       <Route
         path="/register-page"
         exact
-        render={props => <Register {...props} />}
+        render={props => <ChallengeModal {...props} />}
       />
       <Redirect to="/" />
     </Switch>
