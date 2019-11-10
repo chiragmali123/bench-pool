@@ -20,7 +20,7 @@ export default function MainReducer(state = initialState, action) {
         case FETCHING_CHALLENGES_SUCCESS:
             return {
                 ...state,
-                challengesData: action.data ? action.data : []
+                challengesData: action.data ? JSON.parse(JSON.stringify(action.data)) : []
             }
         case FETCHING_POOL_SUCCESS:
             return {

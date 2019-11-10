@@ -38,6 +38,10 @@ class ChallengeList extends React.Component {
     this.refs.main.scrollTop = 0;
   }
 
+  state={
+    challengesData: []
+  }
+
   componentWillMount() {
     this.props.fetchChallenges({});
   }
@@ -60,11 +64,11 @@ class ChallengeList extends React.Component {
     if (startedByUsersId.includes(cell)) {
       status = 'IN_PROGRESS';
     }
-    if (submittedByUsersId.includes(cell)) {
-      status = 'SUBMITTED';
-    }
     if (completedByUsersId.includes(cell)) {
       status = 'COMPLETED';
+    }
+    if (submittedByUsersId.includes(cell)) {
+      status = 'SUBMITTED';
     }
     return status;
   }
@@ -81,19 +85,35 @@ class ChallengeList extends React.Component {
     if (startedByUsersId.includes(cell)) {
       status = 'IN_PROGRESS';
     }
-    if (submittedByUsersId.includes(cell)) {
-      status = 'SUBMITTED';
-    }
+    
     if (completedByUsersId.includes(cell)) {
       status = 'COMPLETED';
     }
+    if (submittedByUsersId.includes(cell)) {
+      status = 'SUBMITTED';
+    }
+    let allUsers = completedByUsers ? completedByUsers : [];
+    if (startedByUsers) {
+      startedByUsers.forEach(x => {
+        if (!completedByUsersId.includes(x.employeeId)) {
+          allUsers.push(x);
+        }
+      });
+    }
+    if (submittedByUsers) {
+      submittedByUsers.forEach(x => {
+        if (!completedByUsersId.includes(x.employeeId) && !startedByUsersId.includes(x.employeeId)) {
+          allUsers.push(x);
+        }
+      });
+    }
+    const user = allUsers.find(x => x.employeeId === cell);
 
     if (status === 'SUBMITTED') {
       return (
         <Button
           color="primary"
-          href="#pablo"
-          onClick={e => e.preventDefault()}>
+          onClick={() => this.updateAction(user.email, 'COMPLETED', row.guid)}>
           Complete
         </Button>
       );
@@ -103,7 +123,7 @@ class ChallengeList extends React.Component {
   }
 
   expandComponent = (row) => {
-    const challengesData = row;
+    const challengesData = { ...row };
     const completedByUsers = challengesData.completedByUsers;
     const completedByUsersId = completedByUsers ? completedByUsers.map(x => x.employeeId) : [];
     const startedByUsers = challengesData.startedByUsers;
@@ -133,8 +153,8 @@ class ChallengeList extends React.Component {
         <div>
           <BootstrapTable data={(allUsers && allUsers.length > 0) ? allUsers : null} version='4'>
             <TableHeaderColumn isKey dataField='firstName'>Name</TableHeaderColumn>
-            <TableHeaderColumn dataField='employeeId' dataFormat={(cell) => this.getStatus(cell, row, this.props.challengesData)}>Status</TableHeaderColumn>
-            <TableHeaderColumn dataField='employeeId' dataFormat={(cell) => this.getAction(cell, row, this.props.challengesData)}>Action</TableHeaderColumn>
+            <TableHeaderColumn dataField='employeeId' dataFormat={(cell) => this.getStatus(cell, challengesData, this.props.challengesData)}>Status</TableHeaderColumn>
+            <TableHeaderColumn dataField='employeeId' dataFormat={(cell) => this.getAction(cell, challengesData, this.props.challengesData)}>Action</TableHeaderColumn>
           </BootstrapTable>
         </div>
       )
@@ -182,11 +202,12 @@ class ChallengeList extends React.Component {
       <div> {content} </div>
     );
     }
-  updateAction = (userEmail, action) => {
-    this.props.updateChallengeAction({ action, userEmail })
+  updateAction = (userEmail, action, guid) => {
+    this.props.updateChallengeAction(guid, { action, userEmail })
   }
 
   render() {
+    console.log(this.props.challengesData)
     return (
       <>
         <DemoNavbar />
@@ -245,7 +266,7 @@ class ChallengeList extends React.Component {
                   </div>
                   <Container>
                     <div>
-                      <BootstrapTable data={JSON.parse(JSON.stringify(this.props.challengesData))} version='4'
+                      <BootstrapTable data={JSON.parse(JSON.stringify([ ...this.props.challengesData]))} version='4'
                         expandComponent={this.expandComponent}
                         expandableRow={() => { return true }}
                         expandColumnOptions={{
@@ -286,7 +307,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchChallenges: (request) => dispatch(getChallenges(request)),
-    updateChallengeAction: (request) => dispatch(putChallengeAction(request))
+    updateChallengeAction: (guid, request) => dispatch(putChallengeAction(guid, request))
   }
 }
 

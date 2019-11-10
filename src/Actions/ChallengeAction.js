@@ -1,6 +1,7 @@
 import { UPDATE_CHALLENGE_SUCCESS } from "constant/Constants";
 import { updateChallengeAction } from "api/updateChallenge";
 import HttpStatus from 'http-status-codes';
+import { getChallenges } from "./Actions";
 
 // action for fetching access token
 export function putChallengeAction(guid, bodyJson) {
@@ -13,7 +14,8 @@ function saveOrUpdateChallengeAction(dispatch, guid, bodyJson) {
     updateChallengeAction({guid, bodyJson})
         .then((response) => {
             if (response.status === HttpStatus.OK) {
-                dispatch(updateChallengeActionSuccess(response.payload))
+                dispatch(updateChallengeActionSuccess(response.payload));
+                dispatch(getChallenges({}))
             }
         })
 }
