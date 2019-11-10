@@ -1,0 +1,145 @@
+#waitlist-notification-nav .dropdown-menu{
+    left: unset;
+    right: 5%;
+    border-radius: 4px;
+    top: 83%;
+    width: 250px;
+    background: #48525C;
+    border: 1px solid #bfc5d3;
+    display: block;
+    background: #fff;
+}
+
+#waitlist-notification-nav .sidebar-notification-item {
+    cursor: pointer;
+    text-align: left;
+    padding: 3px 10px;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 500;
+    width: 250px;
+    word-break: break-all;
+}
+
+#waitlist-notification-nav .dropdown-toggle::after{
+    display: none;
+}
+
+#waitlist-notification-nav .sidebar-notification-nav-icon{
+    width: 25px !important;
+    height: 20px !important;
+}
+
+#waitlist-notification-nav .notification-item-name {
+    padding-left: 18px;
+    font-size: 13px;
+    color: #FFFFFF;
+    display: inline-block;
+    white-space: normal;
+    width: 68%;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+#waitlist-notification-nav .dropdown-menu > div{
+    max-height: 185px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+#waitlist-notification-nav .dropdown-menu > div > div > li > a{
+    display: flex;
+    align-items: center;
+    padding: 8px 20px;
+    justify-content: space-between;
+    text-decoration: none;
+}
+
+#waitlist-notification-nav .notification-fa {
+    position: relative;
+}
+#waitlist-notification-nav .notification-count{
+    font-size: 10px;
+    font-weight: bold;
+}
+#waitlist-notification-nav .notification-badge {
+    font-size: 0.25em;
+    position: absolute;
+    top: -0.0em;
+    right: -2.0em;
+    width: 4.0em;
+    height: 4.0em;
+    border-radius: 50%;
+    text-align: center;
+    color: #fff;
+    background: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#waitlist-notification-nav {
+    color: white !important;
+    font-size: 16px;
+    cursor: pointer;
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    padding-left: 0;
+    padding-bottom: 15px;
+    background-color: inherit;
+}
+
+#waitlist-notification-nav a:hover, #waitlist-notification-nav a:focus {
+    /* background-color: #737B82; */
+}
+
+#waitlist-notification-nav .notification-badge-plus {
+    right: -3.8em;
+    width: 6.0em;
+    border-radius: 35%;
+}
+
+.notification-item-img-container{
+    width: 33px;
+    height: 33px;
+}
+
+.notification-item-img{
+    width: inherit;
+    height: inherit;
+}
+
+#notification-dropdown:after {
+    position: absolute;
+    left: 184px;
+    top: -7px;
+    width: 0px;
+    height: 0;
+    content: '';
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid #ffffff;
+}
+
+#notification-dropdown:before {
+    position: absolute;
+    left: 182px;
+    top: -9px;
+    width: 0px;
+    height: 0;
+    content: '';
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-bottom: 9px solid #bfc5d3;
+}
+
+#waitlist-notification-nav .sidebar-notification-item .notification-retry-icon{
+    width: 22px;
+    height: 20px;
+}
+
+#waitlist-notification-nav .sidebar-notification-item .notification-retry-icon.notification-retry-icon-hidden{
+    opacity: 0;
+}

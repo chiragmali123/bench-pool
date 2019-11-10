@@ -2,6 +2,7 @@ import { FETCHING_OPPORTUNITIES_SUCCESS } from "constant/Constants"
 import { FETCHING_CHALLENGES_SUCCESS } from "constant/Constants"
 import { FETCHING_POOL_SUCCESS } from "constant/Constants"
 import { USER_AUTHENTICATION_ACTION } from "constant/Constants"
+import { FETCHING_NOTIFICATION_SUCCESS } from "constant/Constants"
 
 const initialState = {
     challengesData: [],
@@ -26,6 +27,11 @@ export default function MainReducer(state = initialState, action) {
             return {
                 ...state,
                 poolData: action.data ? action.data : []
+            }
+        case FETCHING_NOTIFICATION_SUCCESS:
+            return {
+                ...state,
+                notifications: action.data ? action.data : []
             }
         case USER_AUTHENTICATION_ACTION:
             return {
