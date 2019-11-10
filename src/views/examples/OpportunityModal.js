@@ -19,6 +19,7 @@ import React from "react";
 // nodejs library that concatenates classes
 import { connect } from 'react-redux';
 import '../../css/ChallengeModal.css';
+import ReactDatetime from "react-datetime";
 // reactstrap components
 import {
   Button,
@@ -31,6 +32,7 @@ import {
   Modal,
 } from "reactstrap";
 import { saveOpportunities } from "Actions/Actions";
+import moment from "moment";
 
 class OpportunityModal extends React.Component {
   toggleModal = state => {
@@ -43,11 +45,13 @@ class OpportunityModal extends React.Component {
     summary: '',
     description: '',
     salePerson: '',
-    teamLead: ''
+    teamLead: '',
+    startTime: new Date(),
+    durationInNumberOfDays: ''
   }
 
   componentDidUpdate(prevProp, prevState) {
-    if(this.state.defaultModal !== prevState.defaultModal) {
+    if (this.state.defaultModal !== prevState.defaultModal) {
       this.setState({
         projectName: '',
         summary: '',
@@ -65,9 +69,15 @@ class OpportunityModal extends React.Component {
     });
   }
 
+  onTimeChange = (startTime) => {
+    this.setState({
+      startTime: startTime.toDate()
+    });
+  }
+
   onSave = () => {
     // call API
-    const body = {...this.state, "userEmail": "chirag.mali@synerzip.com"};
+    const body = { ...this.state, "userEmail": "chirag.mali@synerzip.com", 'startTime': this.state.startTime.getTime() };
     this.props.saveOpportunities(body);
     this.toggleModal("defaultModal");
   }
@@ -120,7 +130,7 @@ class OpportunityModal extends React.Component {
                         <i className="ni ni-align-left-2" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Summary" type="text" onChange={this.onChangeValue} name="summary" value={this.state.summary}/>
+                    <Input placeholder="Summary" type="text" onChange={this.onChangeValue} name="summary" value={this.state.summary} />
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
@@ -130,7 +140,37 @@ class OpportunityModal extends React.Component {
                         <i className="ni ni-bullet-list-67" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Description" type="text" onChange={this.onChangeValue} name="description" value={this.state.description}/>
+                    <Input placeholder="Description" type="text" onChange={this.onChangeValue} name="description" value={this.state.description} />
+                  </InputGroup>
+                </FormGroup>
+                <FormGroup className="input-group-alternative mb-3">
+                  <InputGroup>
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="ni ni-calendar-grid-58" />
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <ReactDatetime
+                      inputProps={{
+                        placeholder: "Date",
+                        
+                      }}
+                      closeOnSelect={true}
+                      value={this.state.startTime}
+                      onChange={this.onTimeChange}
+                      timeFormat={false}
+                    />
+                  </InputGroup>
+                </FormGroup>
+                <FormGroup>
+                  <InputGroup className="input-group-alternative mb-3">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="ni ni-time-alarm" />
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <Input placeholder="Number of Days" type="number"
+                      onChange={this.onChangeValue} name="durationInNumberOfDays" value={this.state.durationInNumberOfDays} />
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>

@@ -1,7 +1,13 @@
 .form-border {
-    padding: 15px;
+    padding: 10px;
     border: 1px solid lightgray;
     border-radius: 5px;
+}
+
+.modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: 0.5rem;
 }
 
 .form-control {

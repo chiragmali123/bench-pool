@@ -276,12 +276,12 @@ class OpportunityList extends React.Component {
                       </div>
                     </Col>
                   </Row>
-                  <div className="mt-5 py-5 border-top text-center">
+                  {/* <div className="mt-5 py-5 border-top text-center">
                     <Row className="justify-content-center">
                       <Col lg="9">
                       </Col>
                     </Row>
-                  </div>
+                  </div> */}
                   <Container>
                     {/* <Row className="row summary-header-row">
                       <Col className="col-sm-5">

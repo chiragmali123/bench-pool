@@ -272,12 +272,12 @@ class ChallengeList extends React.Component {
                       </div>
                     </Col>
                   </Row>
-                  <div className="mt-5 py-5 border-top text-center">
+                  {/* <div className="mt-5 py-5 border-top text-center">
                     <Row className="justify-content-center">
                       <Col lg="9">
                       </Col>
                     </Row>
-                  </div>
+                  </div> */}
                   <Container>
                     <div>
                       <BootstrapTable data={JSON.parse(JSON.stringify([...this.props.challengesData]))} version='4'
