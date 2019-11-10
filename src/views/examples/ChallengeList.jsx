@@ -18,15 +18,16 @@
 import React from "react";
 
 // reactstrap components
-import { Button, Card, Container, Row, Col } from "reactstrap";
+import { Button, Card, Container, Row, Col, Collapse, CardBody, CardTitle } from "reactstrap";
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
 // core components
 import DemoNavbar from "components/Navbars/DemoNavbar.jsx";
 //import SimpleFooter from "components/Footers/SimpleFooter.jsx";
 import SimpleFooter from "components/Footers/CardsFooter.jsx";
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { getChallenges } from "Actions/Actions";
-import { checkValueNotEmpty } from "utils";
+
 class ChallengeList extends React.Component {
   componentDidMount() {
     document.documentElement.scrollTop = 0;
@@ -36,6 +37,155 @@ class ChallengeList extends React.Component {
 
   componentWillMount() {
     this.props.fetchChallenges({});
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      challengesData: nextProps.challengesData
+    })
+  }
+
+  getStatus = (cell, row, challengesDataList) => {
+    const challengesData = challengesDataList.find(x => x.guid === row.guid);
+    const completedByUsers = challengesData.completedByUsers;
+    const completedByUsersId = completedByUsers ? completedByUsers.map(x => x.employeeId) : [];
+    const startedByUsers = challengesData.startedByUsers;
+    const startedByUsersId = startedByUsers ? startedByUsers.map(x => x.employeeId) : [];
+    const submittedByUsers = challengesData.submittedByUsers;
+    const submittedByUsersId = submittedByUsers ? submittedByUsers.map(x => x.employeeId) : [];
+    let status = '';
+    if (startedByUsersId.includes(cell)) {
+      status = 'IN_PROGRESS';
+    }
+    if (submittedByUsersId.includes(cell)) {
+      status = 'SUBMITTED';
+    }
+    if (completedByUsersId.includes(cell)) {
+      status = 'COMPLETED';
+    }
+    return status;
+  }
+
+  getAction = (cell, row, challengesDataList) => {
+    const challengesData = challengesDataList.find(x => x.guid === row.guid);
+    const completedByUsers = challengesData.completedByUsers;
+    const completedByUsersId = completedByUsers ? completedByUsers.map(x => x.employeeId) : [];
+    const startedByUsers = challengesData.startedByUsers;
+    const startedByUsersId = startedByUsers ? startedByUsers.map(x => x.employeeId) : [];
+    const submittedByUsers = challengesData.submittedByUsers;
+    const submittedByUsersId = submittedByUsers ? submittedByUsers.map(x => x.employeeId) : [];
+    let status = '';
+    if (startedByUsersId.includes(cell)) {
+      status = 'IN_PROGRESS';
+    }
+    if (submittedByUsersId.includes(cell)) {
+      status = 'SUBMITTED';
+    }
+    if (completedByUsersId.includes(cell)) {
+      status = 'COMPLETED';
+    }
+
+    if (status === 'SUBMITTED') {
+      return (
+        <Button
+          color="primary"
+          href="#pablo"
+          onClick={e => e.preventDefault()}>
+          Complete
+        </Button>
+      );
+    }
+
+    return null;
+  }
+
+  expandComponent = (row) => {
+    const challengesData = row;
+    const completedByUsers = challengesData.completedByUsers;
+    const completedByUsersId = completedByUsers ? completedByUsers.map(x => x.employeeId) : [];
+    const startedByUsers = challengesData.startedByUsers;
+    const startedByUsersId = startedByUsers ? startedByUsers.map(x => x.employeeId) : [];
+    const submittedByUsers = challengesData.submittedByUsers;
+    const submittedByUsersId = submittedByUsers ? submittedByUsers.map(x => x.employeeId) : [];
+
+    let allUsers = completedByUsers;
+    if (startedByUsers) {
+      startedByUsers.forEach(x => {
+        if (!completedByUsersId.includes(x.employeeId)) {
+          allUsers.push(x);
+        }
+      });
+    }
+    if (submittedByUsers) {
+      submittedByUsers.forEach(x => {
+        if (!completedByUsersId.includes(x.employeeId) && !startedByUsersId.includes(x.employeeId)) {
+          allUsers.push(x);
+        }
+      });
+    }
+
+    let jsx = '';
+    if(allUsers && allUsers.length > 0) {
+      jsx = (
+        <div>
+          <BootstrapTable data={(allUsers && allUsers.length > 0) ? allUsers : null} version='4'>
+            <TableHeaderColumn isKey dataField='firstName'>Name</TableHeaderColumn>
+            <TableHeaderColumn dataField='employeeId' dataFormat={(cell) => this.getStatus(cell, row, this.props.challengesData)}>Status</TableHeaderColumn>
+            <TableHeaderColumn dataField='employeeId' dataFormat={(cell) => this.getAction(cell, row, this.props.challengesData)}>Action</TableHeaderColumn>
+          </BootstrapTable>
+        </div>
+      )
+    } else {
+      jsx = (
+        <div>None user accepted this challenge</div>
+      )
+    }
+
+    let details = (
+      <div>
+        <section className='mb-3'>
+          <div className='row mb-2'>
+            <div className='col-sm-3'>
+              <large>Description:</large>
+            </div>
+            <div className='col-sm-9' style={{ 'white-space': 'normal' }}>
+              <large>{row.description}</large>
+            </div>
+          </div>
+          <div className='row mb-2'>
+            <div className='col-sm-3'>
+              <large>Number of Days:</large>
+            </div>
+            <div className='col-sm-9' style={{ 'white-space': 'normal' }}>
+              <large>{row.durationInNumberOfDays}</large>
+            </div>
+          </div>
+          <div className='row mb-2'>
+            <div className='col-sm-3'>
+              <large>Created by:</large>
+            </div>
+            <div className='col-sm-9' style={{ 'white-space': 'normal' }}>
+              <large>{row.addedByUser.firstName + ' ' + row.addedByUser.lastName}</large>
+            </div>
+          </div>
+        </section>
+        {jsx}
+      </div>
+    );
+    return details;
+  }
+
+  expandColumnComponent = ({ isExpandableRow, isExpanded }) => {
+    let content = '';
+
+    if (isExpandableRow) {
+      content = (isExpanded ? <i class="fa fa-minus" aria-hidden="true"></i> : <i class="fa fa-plus" aria-hidden="true"></i>);
+    } else {
+      content = ' ';
+    }
+    return (
+      <div> {content} </div>
+    );
   }
 
   render() {
@@ -129,62 +279,25 @@ class ChallengeList extends React.Component {
                       </div>
                     </Col>
                   </Row>
-                  {/* <div className="text-center mt-5">
-                    <h3>
-                      Jessica Jones{" "}
-                      <span className="font-weight-light">, 27</span>
-                    </h3>
-                    <div className="h6 font-weight-300">
-                      <i className="ni location_pin mr-2" />
-                      Bucharest, Romania
-                    </div>
-                    <div className="h6 mt-4">
-                      <i className="ni business_briefcase-24 mr-2" />
-                      Solution Manager - Creative Tim Officer
-                    </div>
-                    <div>
-                      <i className="ni education_hat mr-2" />
-                      University of Computer Science
-                    </div>
-                  </div> */}
                   <div className="mt-5 py-5 border-top text-center">
                     <Row className="justify-content-center">
                       <Col lg="9">
-                        {/* <p>
-                          An artist of considerable range, Ryan — the name taken
-                          by Melbourne-raised, Brooklyn-based Nick Murphy —
-                          writes, performs and records all of his own music,
-                          giving it a warm, intimate feel with a solid groove
-                          structure. An artist of considerable range.
-                        </p>
-                        <a href="#pablo" onClick={e => e.preventDefault()}>
-                          Show more
-                        </a> */}
                       </Col>
                     </Row>
                   </div>
                   <Container>
-                    <Row className="row summary-header-row">
-                      <Col className="col-sm-5">
-                        <span>Name Name</span>
-                      </Col>
-                      <Col className="col-sm-7">
-                        <span>Summary</span>
-                      </Col>
-                    </Row>
-                    {this.props.challengesData && this.props.challengesData.map(opportunity => {
-                      if(!checkValueNotEmpty(opportunity.name)){
-                        return null;
-                      }
-                      return <Row className="row summary-row">
-                        <Col className="col-sm-5">
-                          <span>{opportunity.name}</span>
-                        </Col>
-                        <Col className="col-sm-7">
-                          <span>{opportunity.summary}</span>
-                        </Col>
-                      </Row>;
-                    })}
+                    <div>
+                      <BootstrapTable data={JSON.parse(JSON.stringify(this.props.challengesData))} version='4'
+                        expandComponent={this.expandComponent}
+                        expandableRow={() => { return true }}
+                        expandColumnOptions={{
+                          expandColumnVisible: true,
+                          expandColumnComponent: this.expandColumnComponent,
+                        }}>
+                        <TableHeaderColumn isKey dataField='name'>Challenge Name</TableHeaderColumn>
+                        <TableHeaderColumn dataField='summary'>Summary</TableHeaderColumn>
+                      </BootstrapTable>
+                    </div>
                   </Container>
                   <div className="mt-5 py-5 border-top text-center">
                     <Row className="justify-content-center">
@@ -219,6 +332,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(
-mapStateToProps,
-mapDispatchToProps,
+  mapStateToProps,
+  mapDispatchToProps,
 )(ChallengeList)
