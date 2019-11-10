@@ -3,7 +3,7 @@
     right: 5%;
     border-radius: 4px;
     top: 83%;
-    width: 250px;
+    width: 270px;
     background: #48525C;
     border: 1px solid #bfc5d3;
     display: block;
@@ -14,11 +14,12 @@
     cursor: pointer;
     text-align: left;
     padding: 3px 10px;
+    padding-right: 20px;
     display: flex;
     align-items: center;
     font-size: 13px;
     font-weight: 500;
-    width: 250px;
+    width: 270px;
     word-break: break-all;
 }
 
@@ -104,6 +105,7 @@
 .notification-item-img-container{
     width: 33px;
     height: 33px;
+    margin-right: 5px;
 }
 
 .notification-item-img{
@@ -113,7 +115,7 @@
 
 #notification-dropdown:after {
     position: absolute;
-    left: 184px;
+    left: 203px;
     top: -7px;
     width: 0px;
     height: 0;
@@ -125,7 +127,7 @@
 
 #notification-dropdown:before {
     position: absolute;
-    left: 182px;
+    left: 201px;
     top: -9px;
     width: 0px;
     height: 0;
