@@ -42,6 +42,7 @@ import {connect} from 'react-redux';
 import { authenticateUser } from "Actions/AuthenticationAction";
 import { checkValueNotEmpty } from "utils";
 import MyAccount from "views/examples/MyAccount";
+
 class DemoNavbar extends React.Component {
   componentDidMount() {
     this.checkIfUserSingedIn();
@@ -286,6 +287,8 @@ class DemoNavbar extends React.Component {
                   </NavItem>
                 </Nav> */}
               </UncontrolledCollapse>
+              <span className="notification-icon"><img className="notification-img" src={require("assets/img/weblist_icon_notification.png")}/>
+              <span className="notification-count">55</span></span>
               <MyAccount /> 
             </Container>
           </Navbar>
