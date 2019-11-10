@@ -47,7 +47,7 @@ class CardsFooter extends React.Component {
                   <a
                     href="#"
                   >
-                    Tech Rider
+                    Tech Riders
                   </a>
                   .
                 </div>
