@@ -41,12 +41,20 @@ import {
 import {connect} from 'react-redux';
 import { authenticateUser } from "Actions/AuthenticationAction";
 import { checkValueNotEmpty } from "utils";
+import { dispactSignInAction } from "Actions/AuthenticationAction";
 class LoginNavbar extends React.Component {
   componentDidMount() {
     //this.checkIfUserSingedIn();
     let headroom = new Headroom(document.getElementById("navbar-main"));
     // initialise
     headroom.init();
+  }
+
+  componentWillMount(){
+    let userInfo =localStorage.getItem('sessionInfo');
+    if (userInfo) {
+      this.props.signOut({ user: JSON.parse(userInfo) });
+    }
   }
   render() {
     return (
@@ -286,6 +294,7 @@ function mapStateToProps(state) {
   
   function mapDispatchToProps(dispatch) {
     return {
+      signOut: (request) => dispatch(dispactSignInAction(request))
     }
   }
   

@@ -45,6 +45,29 @@
     font-size: xx-large;
 }
 
+.notification-icon{
+    height: 35px;
+    width: 35px;
+    margin-right: 30px;
+    position: relative;
+}
+
+.notification-img{
+    height: inherit;
+    width: inherit;
+}
+
+.notification-count{
+    position: absolute;
+    padding: 2px 10px;
+    background: red;
+    border-radius: 34px;
+    top: 10px;
+    left: 20px;
+    color: white;
+    font-weight: 700;
+    font-size: small;
+}
 @media (max-width: 1333px){
     .section-profile-cover {
         height: 460px;

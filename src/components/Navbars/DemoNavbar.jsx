@@ -42,6 +42,9 @@ import {connect} from 'react-redux';
 import { authenticateUser } from "Actions/AuthenticationAction";
 import { checkValueNotEmpty } from "utils";
 import MyAccount from "views/examples/MyAccount";
+import Notifications from "components/Notification/Notifications";
+import { dispactSignInAction } from "Actions/AuthenticationAction";
+
 class DemoNavbar extends React.Component {
   componentDidMount() {
     this.checkIfUserSingedIn();
@@ -49,20 +52,29 @@ class DemoNavbar extends React.Component {
     // initialise
     headroom.init();
   }
+
   componentDidUpdate(){
     this.checkIfUserSingedIn();
   }
+
   componentWillMount() {
+    let userInfo =localStorage.getItem('sessionInfo');
+    if (userInfo) {
+      this.props.signOut({ user: JSON.parse(userInfo) })
+    }
     this.checkIfUserSingedIn();
   }
+
   componentWillUpdate() {
     this.checkIfUserSingedIn();
   }
+
   checkIfUserSingedIn = () =>{
     if(!checkValueNotEmpty(this.props.userEmail)){
       window.location = "/login-page";
     }
   }
+
   render() {
     return (
       <>
@@ -286,6 +298,7 @@ class DemoNavbar extends React.Component {
                   </NavItem>
                 </Nav> */}
               </UncontrolledCollapse>
+              <Notifications />
               <MyAccount /> 
             </Container>
           </Navbar>
@@ -302,7 +315,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    userAuthenticate: (request) => dispatch(authenticateUser(request))
+    userAuthenticate: (request) => dispatch(authenticateUser(request)),
+    signOut: (request) => dispatch(dispactSignInAction(request))
   }
 }
 
