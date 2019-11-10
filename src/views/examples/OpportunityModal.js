@@ -46,7 +46,7 @@ class OpportunityModal extends React.Component {
     description: '',
     salePerson: '',
     teamLead: '',
-    startTime: new Date(),
+    startTime: new Date().setDate(new Date().getDate() + 1),
     durationInNumberOfDays: ''
   }
 
