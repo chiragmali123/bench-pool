@@ -14,14 +14,24 @@ class Notifications extends Component {
 
     constructor(props) {
         super(props);
+        let timeInterval = setInterval(() => {
+            this.fetch();
+        }, 5000);
         this.state = {
             ...this.getNotificationDetails(props),
-            showPanel: false
+            showPanel: false,
+            timeInterval
         };
     }
 
     componentWillMount() {
         this.fetch();
+    }
+
+    componentWillUnmount(){
+        if (this.state.timeInterval) {
+            clearInterval(this.state.timeInterval);
+        }
     }
 
     fetch = () => {
