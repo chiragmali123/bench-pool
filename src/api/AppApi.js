@@ -41,3 +41,20 @@ export const fetchPool = ({ bodyJson }) =>
         console.log("Error while fetching opportunities:", error);
         return handleError(error);
     });
+
+
+export const fetchNotifications = ({ userEmail }) =>
+    axios.get(
+        "/benchpool/user/activitylog",
+        {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8'
+            },
+            params: {
+                'email': userEmail
+            }
+        }
+    ).then(data => handleOkResponse(data)).catch(error => {
+        console.log("Error while fetching opportunities:", error);
+        return handleError(error);
+    });

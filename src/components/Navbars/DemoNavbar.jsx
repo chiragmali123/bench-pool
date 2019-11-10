@@ -42,6 +42,8 @@ import {connect} from 'react-redux';
 import { authenticateUser } from "Actions/AuthenticationAction";
 import { checkValueNotEmpty } from "utils";
 import MyAccount from "views/examples/MyAccount";
+import Notifications from "components/Notification/Notifications";
+
 class DemoNavbar extends React.Component {
   componentDidMount() {
     this.checkIfUserSingedIn();
@@ -49,20 +51,25 @@ class DemoNavbar extends React.Component {
     // initialise
     headroom.init();
   }
+
   componentDidUpdate(){
     this.checkIfUserSingedIn();
   }
+
   componentWillMount() {
     this.checkIfUserSingedIn();
   }
+
   componentWillUpdate() {
     this.checkIfUserSingedIn();
   }
+
   checkIfUserSingedIn = () =>{
     if(!checkValueNotEmpty(this.props.userEmail)){
       window.location = "/login-page";
     }
   }
+
   render() {
     return (
       <>
@@ -286,6 +293,7 @@ class DemoNavbar extends React.Component {
                   </NavItem>
                 </Nav> */}
               </UncontrolledCollapse>
+              <Notifications />
               <MyAccount /> 
             </Container>
           </Navbar>
