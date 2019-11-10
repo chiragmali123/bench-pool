@@ -108,7 +108,7 @@ class ChallengeList extends React.Component {
     const submittedByUsers = challengesData.submittedByUsers;
     const submittedByUsersId = submittedByUsers ? submittedByUsers.map(x => x.employeeId) : [];
 
-    let allUsers = completedByUsers;
+    let allUsers = completedByUsers ? completedByUsers : [];
     if (startedByUsers) {
       startedByUsers.forEach(x => {
         if (!completedByUsersId.includes(x.employeeId)) {
@@ -150,14 +150,6 @@ class ChallengeList extends React.Component {
             </div>
             <div className='col-sm-9' style={{ 'white-space': 'normal' }}>
               <large>{row.description}</large>
-            </div>
-          </div>
-          <div className='row mb-2'>
-            <div className='col-sm-3'>
-              <large>Number of Days:</large>
-            </div>
-            <div className='col-sm-9' style={{ 'white-space': 'normal' }}>
-              <large>{row.durationInNumberOfDays}</large>
             </div>
           </div>
           <div className='row mb-2'>

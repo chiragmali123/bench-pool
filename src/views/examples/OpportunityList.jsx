@@ -103,7 +103,7 @@ class OpportunityList extends React.Component {
     const notInterestedUsers = opportunityData.notInterestedUsers;
     const notInterestedUsersId = notInterestedUsers ? notInterestedUsers.map(x => x.employeeId) : [];
 
-    let allUsers = interestedUsers;
+    let allUsers = interestedUsers ? interestedUsers : [];
     if (approvedUsers) {
       approvedUsers.forEach(x => {
         if (!interestedUsersId.includes(x.employeeId)) {
@@ -142,6 +142,14 @@ class OpportunityList extends React.Component {
             </div>
             <div className='col-sm-9' style={{ 'white-space': 'normal' }}>
               <large>{row.description}</large>
+            </div>
+          </div>
+          <div className='row mb-2'>
+            <div className='col-sm-3'>
+              <large>Technologies:</large>
+            </div>
+            <div className='col-sm-9' style={{ 'white-space': 'normal' }}>
+              <large>{row.technologies && row.technologies.join(', ')}</large>
             </div>
           </div>
           <div className='row mb-2'>
