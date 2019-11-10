@@ -41,27 +41,12 @@ import {
 import {connect} from 'react-redux';
 import { authenticateUser } from "Actions/AuthenticationAction";
 import { checkValueNotEmpty } from "utils";
-import MyAccount from "views/examples/MyAccount";
-class DemoNavbar extends React.Component {
+class LoginNavbar extends React.Component {
   componentDidMount() {
-    this.checkIfUserSingedIn();
+    //this.checkIfUserSingedIn();
     let headroom = new Headroom(document.getElementById("navbar-main"));
     // initialise
     headroom.init();
-  }
-  componentDidUpdate(){
-    this.checkIfUserSingedIn();
-  }
-  componentWillMount() {
-    this.checkIfUserSingedIn();
-  }
-  componentWillUpdate() {
-    this.checkIfUserSingedIn();
-  }
-  checkIfUserSingedIn = () =>{
-    if(!checkValueNotEmpty(this.props.userEmail)){
-      window.location = "/login-page";
-    }
   }
   render() {
     return (
@@ -286,7 +271,6 @@ class DemoNavbar extends React.Component {
                   </NavItem>
                 </Nav> */}
               </UncontrolledCollapse>
-              <MyAccount /> 
             </Container>
           </Navbar>
         </header>
@@ -295,18 +279,17 @@ class DemoNavbar extends React.Component {
   }
 }
 function mapStateToProps(state) {
-  return {
-    userEmail: state.appData.user ? state.appData.user.email:null
+    return {
+      userEmail: state.appData.userEmail
+    }
   }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    userAuthenticate: (request) => dispatch(authenticateUser(request))
+  
+  function mapDispatchToProps(dispatch) {
+    return {
+    }
   }
-}
-
-export default connect(
-mapStateToProps,
-mapDispatchToProps,
-)(DemoNavbar)
+  
+  export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  )(LoginNavbar)

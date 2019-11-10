@@ -46,6 +46,7 @@ import ChallengeImg from "../../assets/img/challenge.jpg";
 import Download from "../IndexSections/Download.jsx";
 import OpportunityModal from "./OpportunityModal.js";
 import ChallengeModal from "./ChallengeModal.js";
+import { Link } from "react-router-dom";
 
 class Landing extends React.Component {
   state = {};
@@ -143,10 +144,10 @@ class Landing extends React.Component {
                             Create
                           </Button> */}
                           <OpportunityModal></OpportunityModal>
-                          <Button
+                          <Button   nav to="/opportunity-list-page" tag={Link}
                             className="mt-4"
                             color="primary"
-                            href="/opportunity-list-page"
+                            
                           >
                             View
                           </Button>
@@ -179,11 +180,9 @@ class Landing extends React.Component {
                             Create
                           </Button> */}
                           <ChallengeModal />
-                          <Button
+                          <Button nav to="/challenge-list-page" tag={Link}
                             className="mt-4"
                             color="success"
-                            href="/challenge-list-page"
-                            
                           >
                             View
                           </Button>
@@ -210,7 +209,7 @@ class Landing extends React.Component {
                           <Button
                             className="mt-4"
                             color="warning"
-                            href="/pool-list-page"
+                            nav to="/pool-list-page" tag={Link}
                           >
                             View
                           </Button>
