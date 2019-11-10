@@ -43,6 +43,7 @@ import { authenticateUser } from "Actions/AuthenticationAction";
 import { checkValueNotEmpty } from "utils";
 import MyAccount from "views/examples/MyAccount";
 import Notifications from "components/Notification/Notifications";
+import { dispactSignInAction } from "Actions/AuthenticationAction";
 
 class DemoNavbar extends React.Component {
   componentDidMount() {
@@ -57,6 +58,10 @@ class DemoNavbar extends React.Component {
   }
 
   componentWillMount() {
+    let userInfo =localStorage.getItem('sessionInfo');
+    if (userInfo) {
+      this.props.signOut({ user: JSON.parse(userInfo) })
+    }
     this.checkIfUserSingedIn();
   }
 
@@ -310,7 +315,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    userAuthenticate: (request) => dispatch(authenticateUser(request))
+    userAuthenticate: (request) => dispatch(authenticateUser(request)),
+    signOut: (request) => dispatch(dispactSignInAction(request))
   }
 }
 

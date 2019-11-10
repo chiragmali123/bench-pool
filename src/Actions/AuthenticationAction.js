@@ -19,6 +19,7 @@ function getPoolData(dispatch, { userEmail }) {
                 if (!isArrayEmpty(response.payload)) {
                     userFound = response.payload.find(user => user.email === userEmail)
                 }
+                localStorage.setItem('sessionInfo',JSON.stringify(userFound?userFound:{}));
                 dispatch(dispactSignInAction({ user: userFound, loginResult: userFound ? true : false }))
             }
             else {
