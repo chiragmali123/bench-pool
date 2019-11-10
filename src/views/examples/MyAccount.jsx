@@ -23,7 +23,8 @@ class MyAccount extends React.Component {
             <DropdownItem  nav to="/profile-page" tag={Link} >
               My Profile
             </DropdownItem>
-            <DropdownItem  onClick={ (e) => this.props.signOut({})} >
+            <DropdownItem  onClick={ (e) => {
+              localStorage.removeItem('sessionInfo');this.props.signOut({})}} >
               Sign out
             </DropdownItem>
           </DropdownMenu>
