@@ -182,8 +182,8 @@ class Landing extends React.Component {
                           <Button
                             className="mt-4"
                             color="success"
-                            href="#pablo"
-                            onClick={e => e.preventDefault()}
+                            href="/challenge-list-page"
+                            
                           >
                             View
                           </Button>
