@@ -19,7 +19,7 @@ import React from "react";
 
 // reactstrap components
 import { Button, Card, Container, Row, Col } from "reactstrap";
-
+import { Badge } from "reactstrap";
 // core components
 import DemoNavbar from "components/Navbars/DemoNavbar.jsx";
 //import SimpleFooter from "components/Footers/SimpleFooter.jsx";
@@ -28,15 +28,127 @@ import { checkValueNotEmpty } from "utils";
 import {connect} from 'react-redux';
 import { getPool } from "Actions/Actions";
 import { isArrayEmpty } from "utils";
+import { getChallenges } from "Actions/Actions";
+import { getOpportunities } from "Actions/Actions";
 class PoolList extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      userSummaryMap:this.getSummary(props)
+    }
+  }
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     this.refs.main.scrollTop = 0;
   }
 
+  getSummary = (props) => {
+    const opportunityMap = { interestedUsers: {}, notInterestedUsers: {}, approvedUsers: {} }
+    if (props.opportunitiesData) {
+      props.opportunitiesData.map(opportunity => {
+        let interested = !isArrayEmpty(opportunity.interestedUsers) ? opportunity.interestedUsers : [];;
+        let notInterested = !isArrayEmpty(opportunity.notInterestedUsers) ? opportunity.notInterestedUsers : [];
+        let approved = !isArrayEmpty(opportunity.approvedUsers) ? opportunity.approvedUsers : [];
+        interested.map(user => {
+          let count = opportunityMap['interestedUsers'][user.guid];
+          if (count) {
+            opportunityMap['interestedUsers'][user.guid] = ++count;
+          } else {
+            opportunityMap['interestedUsers'][user.guid] = 1;
+          }
+        });
+        notInterested.map(user => {
+          let count = opportunityMap['notInterestedUsers'][user.guid];
+
+          if (count) {
+            opportunityMap['notInterestedUsers'][user.guid] = ++count;
+          } else {
+            opportunityMap['notInterestedUsers'][user.guid] = 1;
+          }
+        });
+        approved.map(user => {
+          let count = opportunityMap['approvedUsers'][user.guid];
+
+          if (count) {
+            opportunityMap['approvedUsers'][user.guid] = ++count;
+          } else {
+            opportunityMap['approvedUsers'][user.guid] = 1;
+          }
+        });
+      })
+    }
+
+    const challengeMap = { inProgress: {}, submitted: {}, completed: {} }
+    if (props.challengesData) {
+      props.challengesData.map(challenge => {
+        let inProgress = !isArrayEmpty(challenge.interestedUsers) ? challenge.interestedUsers : [];;
+        let submitted = !isArrayEmpty(challenge.notInterestedUsers) ? challenge.notInterestedUsers : [];
+        let completed = !isArrayEmpty(challenge.approvedUsers) ? challenge.approvedUsers : [];
+        inProgress.map(user => {
+          let count = challengeMap['inProgress'][user.guid];
+          if (count) {
+            challengeMap['inProgress'][user.guid] = ++count;
+          } else {
+            challengeMap['inProgress'][user.guid] = 1;
+          }
+        });
+        submitted.map(user => {
+          let count = challengeMap['submitted'][user.guid];
+
+          if (count) {
+            challengeMap['submitted'][user.guid] = ++count;
+          } else {
+            challengeMap['submitted'][user.guid] = 1;
+          }
+        });
+        completed.map(user => {
+          let count = challengeMap['completed'][user.guid];
+
+          if (count) {
+            challengeMap['completed'][user.guid] = ++count;
+          } else {
+            challengeMap['completed'][user.guid] = 1;
+          }
+        });
+      })
+    }
+    //const userMap = JSON.parse(JSON.stringify(this.state.userSummaryMap));
+    const userSummaryMap = [];
+    props.poolData.map(user => {
+      let interestedCount = opportunityMap['interestedUsers'][user.guid];
+      let notInterestedCount = opportunityMap['notInterestedUsers'][user.guid];
+      let approvedCount = opportunityMap['approvedUsers'][user.guid];
+      let inProgressCount = challengeMap['inProgress'][user.guid];
+      let submittedCount = challengeMap['submitted'][user.guid];
+      let completedCount = challengeMap['completed'][user.guid];
+      // console.log(` name: ${user.firstName}`);
+      // console.log(` interested: ${interestedCount}`);
+      // console.log(` notInterested: ${notInterestedCount}`);
+      // console.log(` approved: ${approvedCount}`);
+      userSummaryMap.push({
+        user: user,
+        opportunity: { interested: interestedCount, notInterested: notInterestedCount, approved: approvedCount },
+        challenge: { inProgress: inProgressCount, submitted: submittedCount, completed: completedCount }
+      })
+    })
+    return userSummaryMap;
+  }
+
   componentWillMount() {
+    this.props.fetchChallenges({});
+    this.props.fetchOpportunities({});
     this.props.fetchPool({});
+  }
+
+  componentWillReceiveProps(nextProps) {
+    
+    const userSummaryMap = this.getSummary(nextProps);
+
+    if (JSON.stringify(this.state.userSummaryMap) !== JSON.stringify(userSummaryMap)) {
+      this.setState({ userSummaryMap });
+    }
   }
 
 
@@ -75,59 +187,19 @@ class PoolList extends React.Component {
           </section>
           <section className="section">
             <Container>
-              <Card className="card-profile shadow mt--300">
+            <Card className="card-profile shadow mt--300">
                 <div className="px-4">
-                  <Row className="justify-content-center">
-                    <Col className="order-lg-2" lg="3">
-                      <div className="card-profile-image">
-                        <a href="#pablo" onClick={e => e.preventDefault()}>
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("assets/img/theme/team-4-800x800.jpg")}
-                          />
-                        </a>
-                      </div>
-                    </Col>
-                    <Col
-                      className="order-lg-3 text-lg-right align-self-lg-center"
-                      lg="4"
-                    >
-                      <div className="card-profile-actions py-4 mt-lg-0">
-                        <Button
-                          className="mr-4"
-                          color="info"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                          size="sm"
-                        >
-                          Connect
-                        </Button>
-                        <Button
-                          className="float-right"
-                          color="default"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                          size="sm"
-                        >
-                          Message
-                        </Button>
-                      </div>
-                    </Col>
+                <Row className="justify-content-center">
                     <Col className="order-lg-1" lg="4">
                       <div className="card-profile-stats d-flex justify-content-center">
-                        <div>
-                          <span className="heading">22</span>
-                          <span className="description">Friends</span>
-                        </div>
-                        <div>
-                          <span className="heading">10</span>
-                          <span className="description">Photos</span>
-                        </div>
-                        <div>
-                          <span className="heading">89</span>
-                          <span className="description">Comments</span>
-                        </div>
+                       
+                      </div>
+                    </Col>
+                  </Row>
+                  <Row className="justify-content-center">
+                    <Col className="order-lg-1" lg="4">
+                      <div className="card-profile-stats d-flex justify-content-center">
+                       <b>Employee Pool Statistics</b>
                       </div>
                     </Col>
                   </Row>
@@ -149,55 +221,46 @@ class PoolList extends React.Component {
                       University of Computer Science
                     </div>
                   </div> */}
-                  <div className="mt-5 py-5 border-top text-center">
-                    <Row className="justify-content-center">
-                      <Col lg="9">
-                        {/* <p>
-                          An artist of considerable range, Ryan — the name taken
-                          by Melbourne-raised, Brooklyn-based Nick Murphy —
-                          writes, performs and records all of his own music,
-                          giving it a warm, intimate feel with a solid groove
-                          structure. An artist of considerable range.
-                        </p>
-                        <a href="#pablo" onClick={e => e.preventDefault()}>
-                          Show more
-                        </a> */}
-                      </Col>
-                    </Row>
-                  </div>
-                  <div className="mt-5 py-5 border-top text-center">
-                    <Row className="justify-content-center">
-                      <Col lg="9">
-                        {/* <p>
-                          An artist of considerable range, Ryan — the name taken
-                          by Melbourne-raised, Brooklyn-based Nick Murphy —
-                          writes, performs and records all of his own music,
-                          giving it a warm, intimate feel with a solid groove
-                          structure. An artist of considerable range.
-                        </p>
-                        <a href="#pablo" onClick={e => e.preventDefault()}>
-                          Show more
-                        </a> */}
-                      </Col>
-                    </Row>
-                  </div>
+
                   <Container>
                     <Row className="row summary-header-row">
-                      <Col className="col-sm-5">
-                        <span>Employee Name</span>
+                      <Col className="col-sm-2">
+                        <span>Name</span>
                       </Col>
-                      <Col className="col-sm-7">
-                        <span>Employee Email Id</span>
+                      <Col className="col-sm-5">
+                        <span>Opportunities</span>
+                      </Col>
+                      <Col className="col-sm-5">
+                        <span>Challenges</span>
                       </Col>
                     </Row>
-                    {(!isArrayEmpty(this.props.poolData)) && this.props.poolData.map(opportunity => {
+                    {(!isArrayEmpty(this.state.userSummaryMap)) && this.state.userSummaryMap.map(userSummary => {
                       
                       return <Row className="row summary-row">
-                        <Col className="col-sm-5">
-                          <span>{`${opportunity.firstName} ${opportunity.lastName}`}</span>
+                        <Col className="col-sm-2">
+                          <span>{`${userSummary.user.firstName?userSummary.user.firstName:''} ${userSummary.user.lastName?userSummary.user.lastName:''}`}</span>
                         </Col>
-                        <Col className="col-sm-7">
-                        <span>{`${opportunity.email}`}</span>
+                        <Col className="col-sm-5">
+                          <Badge color="success" className="skill-badge" pill>
+                            Interested : {`${userSummary.opportunity.interested ? userSummary.opportunity.interested : 0}`}
+                          </Badge>
+                          <Badge color="warning" className="skill-badge" pill>
+                            Not Interested : {`${userSummary.opportunity.notInterested ? userSummary.opportunity.notInterested : 0}`}
+                          </Badge>
+                          <Badge color="primary" className="skill-badge" pill>
+                            Approved : {`${userSummary.opportunity.approved ? userSummary.opportunity.approved : 0}`}
+                          </Badge>
+                        </Col>
+                        <Col className="col-sm-5">
+                          <Badge color="success" className="skill-badge" pill>
+                            In Progress : {`${userSummary.challenge.inProgress ? userSummary.opportunity.inProgress : 0}`}
+                          </Badge>
+                          <Badge color="default" className="skill-badge" pill>
+                            Submitted : {`${userSummary.challenge.submitted ? userSummary.opportunity.submitted : 0}`}
+                          </Badge>
+                          <Badge color="primary" className="skill-badge" pill>
+                            Completed : {`${userSummary.challenge.completed ? userSummary.opportunity.completed : 0}`}
+                          </Badge>
                         </Col>
                       </Row>;
                     })}
@@ -224,13 +287,17 @@ class PoolList extends React.Component {
 }
 function mapStateToProps(state) {
   return {
-    poolData: state.appData.poolData
+    poolData: state.appData.poolData,
+    challengesData: state.appData.challengesData,
+    opportunitiesData: state.appData.opportunitiesData
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchPool: (request) => dispatch(getPool(request))
+    fetchPool: (request) => dispatch(getPool(request)),
+    fetchOpportunities: (request) => dispatch(getOpportunities(request)),
+    fetchChallenges: (request) => dispatch(getChallenges(request))
   }
 }
 

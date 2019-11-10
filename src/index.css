@@ -34,6 +34,17 @@
     font-weight: 600;
 }
 
+.skill-badge{
+    padding: 8px 10px;
+    min-width: 64px;
+    margin-right: 5px;
+}
+
+.profile-user-name{
+    color: #5e72e4;
+    font-size: xx-large;
+}
+
 @media (max-width: 1333px){
     .section-profile-cover {
         height: 460px;
