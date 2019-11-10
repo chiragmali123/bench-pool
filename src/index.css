@@ -33,3 +33,9 @@
 .font-600{
     font-weight: 600;
 }
+
+@media (max-width: 1333px){
+    .section-profile-cover {
+        height: 460px;
+    }
+}
