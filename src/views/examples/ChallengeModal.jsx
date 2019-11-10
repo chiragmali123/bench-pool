@@ -39,7 +39,7 @@ class ChallengeModal extends React.Component {
   };
 
   state = {
-    name: '',
+    challengeName: '',
     summary: '',
     description: '',
   }
@@ -109,7 +109,7 @@ class ChallengeModal extends React.Component {
                           <i className="ni ni-laptop" />
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input placeholder="Challenge Name" type="text" onChange={this.onChangeValue} name="name" value={this.state.challengeName}/>
+                      <Input placeholder="Challenge Name" type="text" onChange={this.onChangeValue} name="challengeName" value={this.state.challengeName}/>
                     </InputGroup>
                   </FormGroup>
                   <FormGroup>

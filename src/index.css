@@ -13,3 +13,40 @@
     color: white;
     font-weight: bold;
 }
+
+.opportunity-background{
+    background: no-repeat url("./assets/img/opp2.jpg");
+    background-position: -69px -28px;
+}
+
+.challenge-background{
+    background: no-repeat url("./assets/img/challenge.jpg");
+    background-position: -240px -59px;
+}
+
+.pool-background {
+    background: no-repeat url("./assets/img/pool1.jpg");
+    background-position: -3px -3px;
+    background-size: cover;
+}
+
+.font-600{
+    font-weight: 600;
+}
+
+.skill-badge{
+    padding: 8px 10px;
+    min-width: 64px;
+    margin-right: 5px;
+}
+
+.profile-user-name{
+    color: #5e72e4;
+    font-size: xx-large;
+}
+
+@media (max-width: 1333px){
+    .section-profile-cover {
+        height: 460px;
+    }
+}

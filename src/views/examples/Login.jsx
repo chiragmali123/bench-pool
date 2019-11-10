@@ -33,16 +33,35 @@ import {
   Row,
   Col
 } from "reactstrap";
-
+// reactstrap components
+import { Alert } from "reactstrap";
 // core components
-import DemoNavbar from "components/Navbars/DemoNavbar.jsx";
-import SimpleFooter from "components/Footers/SimpleFooter.jsx";
-
+import DemoNavbar from "components/Navbars/LoginNavbar.jsx";
+import SimpleFooter from "components/Footers/CardsFooter.jsx";
+import {connect} from 'react-redux';
+import { authenticateUser } from "Actions/AuthenticationAction";
+import { checkValueNotEmpty } from "utils";
+import { dispactSignInAction } from "Actions/AuthenticationAction";
 class Login extends React.Component {
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     this.refs.main.scrollTop = 0;
+    this.checkIfUserSingedIn();
+  }
+
+  componentDidUpdate() {
+    this.checkIfUserSingedIn();
+  }
+
+  checkIfUserSingedIn = () => {
+    if (checkValueNotEmpty(this.props.userEmail)) {
+      this.props.history.push('/');
+    }
+  }
+
+  state = {
+    userEmail:''
   }
   render() {
     return (
@@ -65,10 +84,13 @@ class Login extends React.Component {
                 <Col lg="5">
                   <Card className="bg-secondary shadow border-0">
                     <CardHeader className="bg-white pb-5">
+                      {this.props.loginFailed && <Alert color="danger">
+                        <strong>Login Failed!</strong>
+                      </Alert>}
                       <div className="text-muted text-center mb-3">
-                        <small>Sign in with</small>
+                        <small className="font-600">Sign in to Bench Pool</small>
                       </div>
-                      <div className="btn-wrapper text-center">
+                      {/* <div className="btn-wrapper text-center">
                         <Button
                           className="btn-neutral btn-icon"
                           color="default"
@@ -97,13 +119,13 @@ class Login extends React.Component {
                           </span>
                           <span className="btn-inner--text">Google</span>
                         </Button>
-                      </div>
+                      </div> */}
                     </CardHeader>
                     <CardBody className="px-lg-5 py-lg-5">
-                      <div className="text-center text-muted mb-4">
+                      {/* <div className="text-center text-muted mb-4">
                         <small>Or sign in with credentials</small>
-                      </div>
-                      <Form role="form">
+                      </div> */}
+                      <Form role="form" onSubmit={(e) => {e.preventDefault();this.props.userAuthenticate({userEmail:this.state.userEmail})}}>
                         <FormGroup className="mb-3">
                           <InputGroup className="input-group-alternative">
                             <InputGroupAddon addonType="prepend">
@@ -111,10 +133,11 @@ class Login extends React.Component {
                                 <i className="ni ni-email-83" />
                               </InputGroupText>
                             </InputGroupAddon>
-                            <Input placeholder="Email" type="email" />
+                            <Input placeholder="Email" onChange={(e) => {this.props.signOut({});
+                            this.setState({userEmail: e.target.value});}} type="email" />
                           </InputGroup>
                         </FormGroup>
-                        <FormGroup>
+                        {/* <FormGroup>
                           <InputGroup className="input-group-alternative">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
@@ -127,8 +150,8 @@ class Login extends React.Component {
                               autoComplete="off"
                             />
                           </InputGroup>
-                        </FormGroup>
-                        <div className="custom-control custom-control-alternative custom-checkbox">
+                        </FormGroup> */}
+                        {/* <div className="custom-control custom-control-alternative custom-checkbox">
                           <input
                             className="custom-control-input"
                             id=" customCheckLogin"
@@ -140,12 +163,14 @@ class Login extends React.Component {
                           >
                             <span>Remember me</span>
                           </label>
-                        </div>
+                        </div> */}
                         <div className="text-center">
                           <Button
                             className="my-4"
                             color="primary"
                             type="button"
+                            disabled={checkValueNotEmpty(this.state.userEmail) == false}
+                            onClick={(e) => {e.preventDefault();this.props.userAuthenticate({userEmail:this.state.userEmail})}}
                           >
                             Sign in
                           </Button>
@@ -155,22 +180,22 @@ class Login extends React.Component {
                   </Card>
                   <Row className="mt-3">
                     <Col xs="6">
-                      <a
+                      {/* <a
                         className="text-light"
                         href="#pablo"
                         onClick={e => e.preventDefault()}
                       >
                         <small>Forgot password?</small>
-                      </a>
+                      </a> */}
                     </Col>
                     <Col className="text-right" xs="6">
-                      <a
+                      {/* <a
                         className="text-light"
                         href="#pablo"
                         onClick={e => e.preventDefault()}
                       >
                         <small>Create new account</small>
-                      </a>
+                      </a> */}
                     </Col>
                   </Row>
                 </Col>
@@ -184,4 +209,24 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+// Login.propTypes = {
+//   history: React.PropTypes.object
+// }
+function mapStateToProps(state) {
+  return {
+    userEmail: state.appData.user ? state.appData.user.email : null,
+    loginFailed: state.appData.loginResult === false
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    userAuthenticate: (request) => dispatch(authenticateUser(request)),
+    signOut: (request) => dispatch(dispactSignInAction(request))
+  }
+}
+
+export default connect(
+mapStateToProps,
+mapDispatchToProps,
+)(Login)

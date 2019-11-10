@@ -16,14 +16,14 @@
 
 */
 import React from "react";
-
+import { Badge } from "reactstrap";
 // reactstrap components
 import { Button, Card, Container, Row, Col } from "reactstrap";
 
 // core components
 import DemoNavbar from "components/Navbars/DemoNavbar.jsx";
-import SimpleFooter from "components/Footers/SimpleFooter.jsx";
-
+import SimpleFooter from "components/Footers/CardsFooter.jsx";
+import {connect} from 'react-redux';
 class Profile extends React.Component {
   componentDidMount() {
     document.documentElement.scrollTop = 0;
@@ -68,7 +68,7 @@ class Profile extends React.Component {
               <Card className="card-profile shadow mt--300">
                 <div className="px-4">
                   <Row className="justify-content-center">
-                    <Col className="order-lg-2" lg="3">
+                    {/* <Col className="order-lg-2" lg="3">
                       <div className="card-profile-image">
                         <a href="#pablo" onClick={e => e.preventDefault()}>
                           <img
@@ -119,30 +119,43 @@ class Profile extends React.Component {
                           <span className="description">Comments</span>
                         </div>
                       </div>
-                    </Col>
+                    </Col> */}
                   </Row>
-                  <div className="text-center mt-5">
-                    <h3>
-                      Jessica Jones{" "}
-                      <span className="font-weight-light">, 27</span>
+                  {this.props.user && <div className="text-center mt-5">
+                    <h3 className="profile-user-name">
+                      {`${this.props.user.firstName} ${this.props.user.lastName}`}
+                      <span className="font-weight-light"></span>
                     </h3>
                     <div className="h6 font-weight-300">
                       <i className="ni location_pin mr-2" />
-                      Bucharest, Romania
+                      
                     </div>
                     <div className="h6 mt-4">
                       <i className="ni business_briefcase-24 mr-2" />
-                      Solution Manager - Creative Tim Officer
+                      {`Role : ${this.props.user.role}`}
                     </div>
-                    <div>
-                      <i className="ni education_hat mr-2" />
-                      University of Computer Science
+                    <div className="h6 mt-4">
+                      <i className="ni business_briefcase-24 mr-2" />
+                      {`Employee Id : ${this.props.user.employeeId}`}
                     </div>
-                  </div>
+                    <div className="h6 mt-4">
+                      <i className="ni business_briefcase-24 mr-2" />
+                      {`Years Of Experience : ${this.props.user.yearOfExperience}`}
+                    </div>
+                    <div className="h6 mt-4">
+                      <i className="ni business_briefcase-24 mr-2" />
+                      Primay Skills : <>{this.props.user.primarySkills && this.props.user.primarySkills.map(skill => {
+                        return <Badge color="primary" className="skill-badge" pill>
+                          {skill}
+                      </Badge>
+                      })}</>
+                    </div>
+ 
+                  </div>}
                   <div className="mt-5 py-5 border-top text-center">
                     <Row className="justify-content-center">
                       <Col lg="9">
-                        <p>
+                        {/* <p>
                           An artist of considerable range, Ryan — the name taken
                           by Melbourne-raised, Brooklyn-based Nick Murphy —
                           writes, performs and records all of his own music,
@@ -151,7 +164,7 @@ class Profile extends React.Component {
                         </p>
                         <a href="#pablo" onClick={e => e.preventDefault()}>
                           Show more
-                        </a>
+                        </a> */}
                       </Col>
                     </Row>
                   </div>
@@ -166,4 +179,19 @@ class Profile extends React.Component {
   }
 }
 
-export default Profile;
+function mapStateToProps(state) {
+  return {
+    user: state.appData.user
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    
+  }
+}
+
+export default connect(
+mapStateToProps,
+mapDispatchToProps,
+)(Profile);

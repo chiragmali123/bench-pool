@@ -40,11 +40,13 @@ import {
 // core components
 import DemoNavbar from "components/Navbars/DemoNavbar.jsx";
 import CardsFooter from "components/Footers/CardsFooter.jsx";
-
+import OpportunityImg from "../../assets/img/opp2.jpg";
+import ChallengeImg from "../../assets/img/challenge.jpg";
 // index page sections
 import Download from "../IndexSections/Download.jsx";
 import OpportunityModal from "./OpportunityModal.js";
 import ChallengeModal from "./ChallengeModal.js";
+import { Link } from "react-router-dom";
 
 class Landing extends React.Component {
   state = {};
@@ -116,18 +118,19 @@ class Landing extends React.Component {
                 <Col lg="12">
                   <Row className="row-grid">
                     <Col lg="4">
-                      <Card className="card-lift--hover shadow border-0">
+                      <Card className="card-lift--hover shadow border-0 opportunity-background">
                         <CardBody className="py-5">
                           <div className="icon icon-shape icon-shape-primary rounded-circle mb-4">
-                            <i className="ni ni-check-bold" />
+                            {/* <img src={OpportunityImg}/> */}
                           </div>
-                          <h6 className="text-primary text-uppercase">
+                          <h6 className="text-primary text-uppercase font-600">
                             Opportunities
                           </h6>
                           <p className="description mt-3">
-                            Argon is a great free UI package based on Bootstrap
-                            4 that includes the most important components and
-                            features.
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           </p>
                           <div>
 
@@ -141,10 +144,10 @@ class Landing extends React.Component {
                             Create
                           </Button> */}
                           <OpportunityModal></OpportunityModal>
-                          <Button
+                          <Button   nav to="/opportunity-list-page" tag={Link}
                             className="mt-4"
                             color="primary"
-                            href="/opportunity-list-page"
+                            
                           >
                             View
                           </Button>
@@ -152,18 +155,19 @@ class Landing extends React.Component {
                       </Card>
                     </Col>
                     <Col lg="4">
-                      <Card className="card-lift--hover shadow border-0">
+                      <Card className="card-lift--hover shadow border-0 challenge-background">
                         <CardBody className="py-5">
                           <div className="icon icon-shape icon-shape-success rounded-circle mb-4">
-                            <i className="ni ni-istanbul" />
+                            {/* <img src={ChallengeImg} /> */}
                           </div>
-                          <h6 className="text-success text-uppercase">
+                          <h6 className="text-success text-uppercase font-600">
                             Challenges
                           </h6>
                           <p className="description mt-3">
-                            Argon is a great free UI package based on Bootstrap
-                            4 that includes the most important components and
-                            features.
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           </p>
                           <div>
 
@@ -176,11 +180,9 @@ class Landing extends React.Component {
                             Create
                           </Button> */}
                           <ChallengeModal />
-                          <Button
+                          <Button nav to="/challenge-list-page" tag={Link}
                             className="mt-4"
                             color="success"
-                            href="#pablo"
-                            onClick={e => e.preventDefault()}
                           >
                             View
                           </Button>
@@ -188,25 +190,26 @@ class Landing extends React.Component {
                       </Card>
                     </Col>
                     <Col lg="4">
-                      <Card className="card-lift--hover shadow border-0">
+                      <Card className="card-lift--hover shadow border-0 pool-background">
                         <CardBody className="py-5">
                           <div className="icon icon-shape icon-shape-warning rounded-circle mb-4">
-                            <i className="ni ni-planet" />
+                            {/* <i className="ni ni-planet" /> */}
                           </div>
-                          <h6 className="text-warning text-uppercase">
+                          <h6 className="text-warning text-uppercase font-600">
                             Pool
                           </h6>
                           <p className="description mt-3">
-                            Argon is a great free UI package based on Bootstrap
-                            4 that includes the most important components and
-                            features.
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           </p>
                           <div>
                           </div>
                           <Button
                             className="mt-4"
                             color="warning"
-                            href="/pool-list-page"
+                            nav to="/pool-list-page" tag={Link}
                           >
                             View
                           </Button>

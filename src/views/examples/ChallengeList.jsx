@@ -28,6 +28,9 @@ import SimpleFooter from "components/Footers/CardsFooter.jsx";
 import { connect } from 'react-redux';
 import { getChallenges } from "Actions/Actions";
 
+import { checkValueNotEmpty } from "utils";
+import { isArrayEmpty } from "utils";
+import { putChallengeAction } from "Actions/ChallengeAction";
 class ChallengeList extends React.Component {
   componentDidMount() {
     document.documentElement.scrollTop = 0;
@@ -178,6 +181,9 @@ class ChallengeList extends React.Component {
     return (
       <div> {content} </div>
     );
+    }
+  updateAction = (userEmail, action) => {
+    this.props.updateChallengeAction({ action, userEmail })
   }
 
   render() {
@@ -215,59 +221,19 @@ class ChallengeList extends React.Component {
           </section>
           <section className="section">
             <Container>
-              <Card className="card-profile shadow mt--300">
+            <Card className="card-profile shadow mt--300">
                 <div className="px-4">
-                  <Row className="justify-content-center">
-                    <Col className="order-lg-2" lg="3">
-                      <div className="card-profile-image">
-                        <a href="#pablo" onClick={e => e.preventDefault()}>
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("assets/img/theme/team-4-800x800.jpg")}
-                          />
-                        </a>
-                      </div>
-                    </Col>
-                    <Col
-                      className="order-lg-3 text-lg-right align-self-lg-center"
-                      lg="4"
-                    >
-                      <div className="card-profile-actions py-4 mt-lg-0">
-                        <Button
-                          className="mr-4"
-                          color="info"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                          size="sm"
-                        >
-                          Connect
-                        </Button>
-                        <Button
-                          className="float-right"
-                          color="default"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                          size="sm"
-                        >
-                          Message
-                        </Button>
-                      </div>
-                    </Col>
+                <Row className="justify-content-center">
                     <Col className="order-lg-1" lg="4">
                       <div className="card-profile-stats d-flex justify-content-center">
-                        <div>
-                          <span className="heading">22</span>
-                          <span className="description">Friends</span>
-                        </div>
-                        <div>
-                          <span className="heading">10</span>
-                          <span className="description">Photos</span>
-                        </div>
-                        <div>
-                          <span className="heading">89</span>
-                          <span className="description">Comments</span>
-                        </div>
+                       
+                      </div>
+                    </Col>
+                  </Row>
+                  <Row className="justify-content-center">
+                    <Col className="order-lg-1" lg="4">
+                      <div className="card-profile-stats d-flex justify-content-center">
+                       <b>Employee Challenges</b>
                       </div>
                     </Col>
                   </Row>
@@ -319,7 +285,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchChallenges: (request) => dispatch(getChallenges(request))
+    fetchChallenges: (request) => dispatch(getChallenges(request)),
+    updateChallengeAction: (request) => dispatch(putChallengeAction(request))
   }
 }
 
