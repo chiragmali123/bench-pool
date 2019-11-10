@@ -43,8 +43,8 @@ export function saveOpportunities(bodyJson) {
 function saveOpportunitiesData(dispatch, bodyJson) {
     saveOpportunity({ ...bodyJson })
         .then((response) => {
-            if (response.status === HttpStatus.OK)
-                dispatch(setOpportunitiesSuccess(response.payload))
+            // if (response.status === HttpStatus.OK)
+            //     dispatch(setOpportunitiesSuccess(response.payload))
         })
 }
 // action for fetching access token
@@ -83,8 +83,8 @@ export function saveChallenges(bodyJson) {
 function saveChallengesData(dispatch, bodyJson) {
     saveChallenge(bodyJson)
         .then((response) => {
-            if (response.status === HttpStatus.OK)
-                dispatch(getChallengesSuccess(response.payload))
+            // if (response.status === HttpStatus.OK)
+            //     dispatch(getChallengesSuccess(response.payload))
         })
 }
 // action for fetching access token

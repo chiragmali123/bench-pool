@@ -43,11 +43,11 @@ class OpportunityList extends React.Component {
 
   getStatus = (cell, row, opportunitiesDataList) => {
     const opportunityData = opportunitiesDataList.find(x => x.guid === row.guid);
-    const interestedUsers = opportunityData.interestedUsers;
+    const interestedUsers = this.removeDuplicates(opportunityData.interestedUsers, 'employeeId');    
     const interestedUsersId = interestedUsers ? interestedUsers.map(x => x.employeeId) : [];
-    const approvedUsers = opportunityData.approvedUsers;
+    const approvedUsers = this.removeDuplicates(opportunityData.approvedUsers, 'employeeId');
     const approvedUsersId = approvedUsers ? approvedUsers.map(x => x.employeeId) : [];
-    const notInterestedUsers = opportunityData.notInterestedUsers;
+    const notInterestedUsers = this.removeDuplicates(opportunityData.notInterestedUsers, 'employeeId');
     const notInterestedUsersId = notInterestedUsers ? notInterestedUsers.map(x => x.employeeId) : [];
 
     let status = ''
@@ -65,11 +65,11 @@ class OpportunityList extends React.Component {
 
   getAction = (cell, row, opportunitiesDataList) => {
     const opportunityData = opportunitiesDataList.find(x => x.guid === row.guid);
-    const interestedUsers = opportunityData.interestedUsers;
+    const interestedUsers = this.removeDuplicates(opportunityData.interestedUsers, 'employeeId');    
     const interestedUsersId = interestedUsers ? interestedUsers.map(x => x.employeeId) : [];
-    const approvedUsers = opportunityData.approvedUsers;
+    const approvedUsers = this.removeDuplicates(opportunityData.approvedUsers, 'employeeId');
     const approvedUsersId = approvedUsers ? approvedUsers.map(x => x.employeeId) : [];
-    const notInterestedUsers = opportunityData.notInterestedUsers;
+    const notInterestedUsers = this.removeDuplicates(opportunityData.notInterestedUsers, 'employeeId');
     const notInterestedUsersId = notInterestedUsers ? notInterestedUsers.map(x => x.employeeId) : [];
     let status = ''
     if (interestedUsersId.includes(cell)) {
@@ -112,13 +112,27 @@ class OpportunityList extends React.Component {
     return null;
   }
 
+  removeDuplicates = (originalArray, prop) => {
+    var newArray = [];
+    var lookupObject = {};
+
+    for (var i in originalArray) {
+      lookupObject[originalArray[i][prop]] = originalArray[i];
+    }
+
+    for (i in lookupObject) {
+      newArray.push(lookupObject[i]);
+    }
+    return newArray;
+  }
+
   expandComponent = (row) => {
     const opportunityData = row;
-    const interestedUsers = opportunityData.interestedUsers;
+    const interestedUsers = this.removeDuplicates(opportunityData.interestedUsers, 'employeeId');
     const interestedUsersId = interestedUsers ? interestedUsers.map(x => x.employeeId) : [];
-    const approvedUsers = opportunityData.approvedUsers;
+    const approvedUsers = this.removeDuplicates(opportunityData.approvedUsers, 'employeeId');
     const approvedUsersID = approvedUsers ? approvedUsers.map(x => x.employeeId) : [];
-    const notInterestedUsers = opportunityData.notInterestedUsers;
+    const notInterestedUsers = this.removeDuplicates(opportunityData.notInterestedUsers, 'employeeId');
     const notInterestedUsersId = notInterestedUsers ? notInterestedUsers.map(x => x.employeeId) : [];
 
     let allUsers = interestedUsers ? interestedUsers : [];

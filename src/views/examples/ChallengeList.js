@@ -38,7 +38,7 @@ class ChallengeList extends React.Component {
     this.refs.main.scrollTop = 0;
   }
 
-  state={
+  state = {
     challengesData: []
   }
 
@@ -54,43 +54,57 @@ class ChallengeList extends React.Component {
 
   getStatus = (cell, row, challengesDataList) => {
     const challengesData = challengesDataList.find(x => x.guid === row.guid);
-    const completedByUsers = challengesData.completedByUsers;
+    const completedByUsers = this.removeDuplicates(challengesData.completedByUsers, 'employeeId');
     const completedByUsersId = completedByUsers ? completedByUsers.map(x => x.employeeId) : [];
-    const startedByUsers = challengesData.startedByUsers;
+    const startedByUsers = this.removeDuplicates(challengesData.startedByUsers, 'employeeId');
     const startedByUsersId = startedByUsers ? startedByUsers.map(x => x.employeeId) : [];
-    const submittedByUsers = challengesData.submittedByUsers;
+    const submittedByUsers = this.removeDuplicates(challengesData.submittedByUsers, 'employeeId');
     const submittedByUsersId = submittedByUsers ? submittedByUsers.map(x => x.employeeId) : [];
     let status = '';
     if (startedByUsersId.includes(cell)) {
       status = 'IN_PROGRESS';
     }
-    if (completedByUsersId.includes(cell)) {
-      status = 'COMPLETED';
-    }
+
     if (submittedByUsersId.includes(cell)) {
       status = 'SUBMITTED';
+    }
+    if (completedByUsersId.includes(cell)) {
+      status = 'COMPLETED';
     }
     return status;
   }
 
+  removeDuplicates = (originalArray, prop) => {
+    var newArray = [];
+    var lookupObject = {};
+
+    for (var i in originalArray) {
+      lookupObject[originalArray[i][prop]] = originalArray[i];
+    }
+
+    for (i in lookupObject) {
+      newArray.push(lookupObject[i]);
+    }
+    return newArray;
+  }
+
   getAction = (cell, row, challengesDataList) => {
     const challengesData = challengesDataList.find(x => x.guid === row.guid);
-    const completedByUsers = challengesData.completedByUsers;
+    const completedByUsers = this.removeDuplicates(challengesData.completedByUsers, 'employeeId');
     const completedByUsersId = completedByUsers ? completedByUsers.map(x => x.employeeId) : [];
-    const startedByUsers = challengesData.startedByUsers;
+    const startedByUsers = this.removeDuplicates(challengesData.startedByUsers, 'employeeId');
     const startedByUsersId = startedByUsers ? startedByUsers.map(x => x.employeeId) : [];
-    const submittedByUsers = challengesData.submittedByUsers;
+    const submittedByUsers = this.removeDuplicates(challengesData.submittedByUsers, 'employeeId');
     const submittedByUsersId = submittedByUsers ? submittedByUsers.map(x => x.employeeId) : [];
     let status = '';
     if (startedByUsersId.includes(cell)) {
       status = 'IN_PROGRESS';
     }
-    
-    if (completedByUsersId.includes(cell)) {
-      status = 'COMPLETED';
-    }
     if (submittedByUsersId.includes(cell)) {
       status = 'SUBMITTED';
+    }
+    if (completedByUsersId.includes(cell)) {
+      status = 'COMPLETED';
     }
     let allUsers = completedByUsers ? completedByUsers : [];
     if (startedByUsers) {
@@ -123,12 +137,12 @@ class ChallengeList extends React.Component {
   }
 
   expandComponent = (row) => {
-    const challengesData = { ...row };
-    const completedByUsers = challengesData.completedByUsers;
+    const challengesData = JSON.parse(JSON.stringify(row));
+    const completedByUsers = this.removeDuplicates(challengesData.completedByUsers, 'employeeId');
     const completedByUsersId = completedByUsers ? completedByUsers.map(x => x.employeeId) : [];
-    const startedByUsers = challengesData.startedByUsers;
+    const startedByUsers = this.removeDuplicates(challengesData.startedByUsers, 'employeeId');
     const startedByUsersId = startedByUsers ? startedByUsers.map(x => x.employeeId) : [];
-    const submittedByUsers = challengesData.submittedByUsers;
+    const submittedByUsers = this.removeDuplicates(challengesData.submittedByUsers, 'employeeId');
     const submittedByUsersId = submittedByUsers ? submittedByUsers.map(x => x.employeeId) : [];
 
     let allUsers = completedByUsers ? completedByUsers : [];
@@ -148,7 +162,7 @@ class ChallengeList extends React.Component {
     }
 
     let jsx = '';
-    if(allUsers && allUsers.length > 0) {
+    if (allUsers && allUsers.length > 0) {
       jsx = (
         <div>
           <BootstrapTable data={(allUsers && allUsers.length > 0) ? allUsers : null} version='4'>
@@ -201,7 +215,7 @@ class ChallengeList extends React.Component {
     return (
       <div> {content} </div>
     );
-    }
+  }
   updateAction = (userEmail, action, guid) => {
     this.props.updateChallengeAction(guid, { action, userEmail })
   }
@@ -242,19 +256,19 @@ class ChallengeList extends React.Component {
           </section>
           <section className="section">
             <Container>
-            <Card className="card-profile shadow mt--300">
+              <Card className="card-profile shadow mt--300">
                 <div className="px-4">
-                <Row className="justify-content-center">
+                  <Row className="justify-content-center">
                     <Col className="order-lg-1" lg="4">
                       <div className="card-profile-stats d-flex justify-content-center">
-                       
+
                       </div>
                     </Col>
                   </Row>
                   <Row className="justify-content-center">
                     <Col className="order-lg-1" lg="4">
                       <div className="card-profile-stats d-flex justify-content-center">
-                       <b>Employee Challenges</b>
+                        <b>Employee Challenges</b>
                       </div>
                     </Col>
                   </Row>
@@ -266,7 +280,7 @@ class ChallengeList extends React.Component {
                   </div>
                   <Container>
                     <div>
-                      <BootstrapTable data={JSON.parse(JSON.stringify([ ...this.props.challengesData]))} version='4'
+                      <BootstrapTable data={JSON.parse(JSON.stringify([...this.props.challengesData]))} version='4'
                         expandComponent={this.expandComponent}
                         expandableRow={() => { return true }}
                         expandColumnOptions={{
