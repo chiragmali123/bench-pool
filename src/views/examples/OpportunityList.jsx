@@ -81,13 +81,29 @@ class OpportunityList extends React.Component {
     if (approvedUsersId.includes(cell)) {
       status = 'APPROVED';
     }
+    
+    let allUsers = interestedUsers ? interestedUsers : [];
+    if (approvedUsers) {
+      approvedUsers.forEach(x => {
+        if (!interestedUsersId.includes(x.employeeId)) {
+          allUsers.push(x);
+        }
+      });
+    }
+    if (notInterestedUsers && approvedUsersId) {
+      notInterestedUsers.forEach(x => {
+        if (!interestedUsersId.includes(x.employeeId) && !approvedUsersId.includes(x.employeeId)) {
+          allUsers.push(x);
+        }
+      });
+    }
+    const user = allUsers.find(x => x.employeeId === cell);
 
     if (status === 'INTERESTED') {
       return (
         <Button
           color="primary"
-          href="#pablo"
-          onClick={e => e.preventDefault()}>
+          onClick={() => this.updateAction(row.guid, user.email, 'APPROVED')}>
           Approve
         </Button>
       );
@@ -191,8 +207,8 @@ class OpportunityList extends React.Component {
   }
 
 
-  updateAction = (userEmail, action) => {
-    this.props.updateOpportunityAction({ action, userEmail })
+  updateAction = (guid, userEmail, action) => {
+    this.props.updateOpportunityAction(guid, { action, userEmail })
   }
 
   render() {
@@ -317,7 +333,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
       fetchOpportunities: (request) => dispatch(getOpportunities(request)),
-      updateOpportunityAction: (request) => dispatch(putOpportunityAction(request))
+      updateOpportunityAction: (guid, request) => dispatch(putOpportunityAction(guid, request))
     }
 }
 
